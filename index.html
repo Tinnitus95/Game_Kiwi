@@ -1,16 +1,181 @@
+
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        <h1>This is Rikards Page</h1>
-    </body>
+
+<head>
+	<meta charset="utf-8">
+	<title>My Google Map</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		#map {
+			height: 400px;
+			width: 100%;
+			margin: 2rem 0 2rem 0;
+		}
+
+		#map2 {
+			margin: 2rem 0 2rem 0;
+			height: 400px;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Watch position</h1>
+	<div id="yourlocation2"></div>
+	<div id="map2">
+	</div>
+	<h1>Testing Kiwi</h1>
+	<div id="yourLocation"></div>
+	<div id="map"></div>
+
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuVpjSaYnMHPb1BryvrFyw2tER5UOsrjs&callback=initMap2">
+	</script>
+
+	<script>
+		function initMap1() {
+
+			let mapDiv = document.getElementById("map");
+			let yourLocationDiv = document.getElementById("yourLocation");
+			let yourLocationDiv2 = document.getElementById("yourlocation2");
+			let yourMarker = new google.maps.Marker();
+
+			// Map options
+			let options = {
+				zoom: 12,
+				center: { lat: 59.312527, lng: 18.061619 }
+			};
+
+			// New map
+			let map = new google.maps.Map(mapDiv, options);
+
+			// Array of markers
+			let markers = [
+				{
+					coords: { lat: 59.315674, lng: 18.034229 },
+					iconImage: './pins/blue_MarkerH.png',
+					content: '<h2>Hornstull</h2>',
+					title: "Horstulls tunnelbana"
+				},
+				{
+					coords: { lat: 59.317787, lng: 18.050151 },
+					iconImage: './pins/pink_MarkerZ.png',
+					content: '<h2>Zinkendsdamm</h2>'
+				},
+				{
+					coords: { lat: 59.316988, lng: 18.063240 },
+					iconImage: './pins/orange_MarkerM.png',
+					content: '<h2>Mariatorget</h2>'
+				},
+				{
+					coords: { lat: 59.319473, lng: 18.072274 },
+					iconImage: './pins/green_MarkerS.png',
+					content: '<h2>Slussen</h2>'
+				},
+				{
+					coords: { lat: 59.314338, lng: 18.073647 },
+					iconImage: './pins/brown_MarkerM.png',
+					content: '<h2>Medborgarplatsen</h2>'
+				},
+				{
+					coords: { lat: 59.307866, lng: 18.075900 },
+					iconImage: './pins/purple_MarkerS.png',
+					content: '<h2>Skanstull</h2>'
+				}
+			];
+
+			// Get your location coordinates
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(sucess);
+				navigator.geolocation.watchPosition(showPosition);
+			}
+
+			function sucess(pos) {
+				let crd = pos.coords;
+				yourLocationDiv.innerHTML =
+					`Latitude: ${crd.latitude} <br> Longitude: ${crd.longitude}`;
+				yourMarker = {
+					coords: { lat: crd.latitude, lng: crd.longitude },
+					content: '<h2>You are here</h2>',
+					title: 'You are here'
+				}
+				markers.push(yourMarker);
+				// Loop through markers 
+				for (let i = 0; i < markers.length; i++) {
+					// Add marker
+					addMarker(markers[i]);
+				}
+				map.setCenter({ lat: crd.latitude, lng: crd.longitude });
+			}
+
+			function showPosition(position) {
+				yourLocationDiv2.innerHTML = "Latitude: " + position.coords.latitude +
+					"<br>Longitude: " + position.coords.longitude;
+			};
+
+			function addMarker(props) {
+				let marker = new google.maps.Marker({
+					position: props.coords,
+					map: map,
+					//icon: props.iconImage
+				});
+
+				if (props.title) {
+					marker.setTitle(props.title);
+				}
+
+				// Check for custom icon
+				if (props.iconImage) {
+					// Set icon image
+					marker.setIcon(props.iconImage);
+				}
+
+				if (props.content) {
+					let infoWindow = new google.maps.InfoWindow({
+						content: props.content
+					});
+
+					marker.addListener('click', () => {
+						infoWindow.open(map, marker);
+					});
+				}
+			}
+		}
+
+		function initMap2() {
+
+			let yourLocationDiv2 = document.getElementById("yourlocation2");
+			let yourMarker = new google.maps.Marker(
+				{
+					icon: './pins/green_MarkerK.png',
+				});
+
+
+			// Map options
+			let options = {
+				zoom: 15,
+				center: { lat: 59.312527, lng: 18.061619 }
+			};
+
+			let map2Div = document.getElementById("map2");
+			let map2 = new google.maps.Map(map2Div, options);
+
+			if (navigator.geolocation) {
+				navigator.geolocation.watchPosition(showPosition);
+			}
+
+			function showPosition(position) {
+				yourLocationDiv2.innerHTML = "Latitude: " + position.coords.latitude +
+					"<br>Longitude: " + position.coords.longitude;
+				let myLatLong = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				yourMarker.setPosition(myLatLong);
+				map2.setCenter(myLatLong);
+				yourMarker.setMap(map2);
+			};
+		}
+
+	</script>
+</body>
+
 </html>
