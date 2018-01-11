@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 
 <head>
 	<meta charset="utf-8">
-	<title>My Google Map</title>
+	<title>POI-grab</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
@@ -12,42 +11,31 @@
 			width: 100%;
 			margin: 2rem 0 2rem 0;
 		}
-
-		#map2 {
-			margin: 2rem 0 2rem 0;
-			height: 400px;
-			width: 100%;
-		}
 	</style>
 </head>
 
 <body>
-	<h1>Watch position</h1>
-	<div id="yourlocation2"></div>
-	<div id="map2">
+	<div id="yourlocation"></div>
+	<div id="map">
 	</div>
-	<h1>Testing Kiwi</h1>
-	<div id="yourLocation"></div>
-	<div id="map"></div>
-
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuVpjSaYnMHPb1BryvrFyw2tER5UOsrjs&callback=initMap2">
-	</script>
-
 	<script>
-		function initMap1() {
 
-			let mapDiv = document.getElementById("map");
-			let yourLocationDiv = document.getElementById("yourLocation");
-			let yourLocationDiv2 = document.getElementById("yourlocation2");
-			let yourMarker = new google.maps.Marker();
+		function initMap() {
 
+			let yourLocationDiv = document.getElementById("yourlocation");
+			let yourMarker = new google.maps.Marker(
+				{
+					icon: './pins/kiwi_icon_blue.png',
+					title: 'YOU',
+					content: '<h2>YOU</<h2>'
+				});
+			let myLatLong = new google.maps.LatLng(0, 0);
 			// Map options
 			let options = {
-				zoom: 12,
+				zoom: 10,
 				center: { lat: 59.312527, lng: 18.061619 }
 			};
-
-			// New map
+			let mapDiv = document.getElementById("map");
 			let map = new google.maps.Map(mapDiv, options);
 
 			// Array of markers
@@ -85,7 +73,6 @@
 				}
 			];
 
-			// Get your location coordinates
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(sucess);
 				navigator.geolocation.watchPosition(showPosition);
@@ -93,26 +80,15 @@
 
 			function sucess(pos) {
 				let crd = pos.coords;
-				yourLocationDiv.innerHTML =
-					`Latitude: ${crd.latitude} <br> Longitude: ${crd.longitude}`;
-				yourMarker = {
-					coords: { lat: crd.latitude, lng: crd.longitude },
-					content: '<h2>You are here</h2>',
-					title: 'You are here'
-				}
-				markers.push(yourMarker);
+
+				map.setZoom(14);
+
 				// Loop through markers 
 				for (let i = 0; i < markers.length; i++) {
 					// Add marker
 					addMarker(markers[i]);
 				}
-				map.setCenter({ lat: crd.latitude, lng: crd.longitude });
 			}
-
-			function showPosition(position) {
-				yourLocationDiv2.innerHTML = "Latitude: " + position.coords.latitude +
-					"<br>Longitude: " + position.coords.longitude;
-			};
 
 			function addMarker(props) {
 				let marker = new google.maps.Marker({
@@ -141,40 +117,19 @@
 					});
 				}
 			}
-		}
-
-		function initMap2() {
-
-			let yourLocationDiv2 = document.getElementById("yourlocation2");
-			let yourMarker = new google.maps.Marker(
-				{
-					icon: './pins/green_MarkerK.png',
-				});
-
-
-			// Map options
-			let options = {
-				zoom: 15,
-				center: { lat: 59.312527, lng: 18.061619 }
-			};
-
-			let map2Div = document.getElementById("map2");
-			let map2 = new google.maps.Map(map2Div, options);
-
-			if (navigator.geolocation) {
-				navigator.geolocation.watchPosition(showPosition);
-			}
 
 			function showPosition(position) {
-				yourLocationDiv2.innerHTML = "Latitude: " + position.coords.latitude +
+				yourLocationDiv.innerHTML = "<h3>Your coordinates</h3>Latitude: " + position.coords.latitude +
 					"<br>Longitude: " + position.coords.longitude;
-				let myLatLong = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				myLatLong = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				yourMarker.setPosition(myLatLong);
-				map2.setCenter(myLatLong);
-				yourMarker.setMap(map2);
-			};
+				map.setCenter(myLatLong);
+				yourMarker.setMap(map);
+			}
 		}
 
+	</script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuVpjSaYnMHPb1BryvrFyw2tER5UOsrjs&callback=initMap">
 	</script>
 </body>
 
