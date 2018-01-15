@@ -7,9 +7,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		#map {
-			height: 400px;
+			height: 100vh;
 			width: 100%;
-			margin: 2rem 0 2rem 0;
+			margin: 0rem 0 0rem 0;
 		}
 	</style>
 </head>
@@ -32,7 +32,7 @@
 			let myLatLong = new google.maps.LatLng(0, 0);
 			// Map options
 			let options = {
-				zoom: 10,
+				zoom: 16,
 				center: { lat: 59.312527, lng: 18.061619 }
 			};
 			let mapDiv = document.getElementById("map");
@@ -41,8 +41,20 @@
 			// Array of markers
 			let markers = [
 				{
+					coords: { lat: 59.312962, lng: 18.109841 },
+					iconImage: './pins/birds_nest.png',
+					content: '<h2>Caparol</h2>',
+					title: "Intersection"
+				},
+				{
+					coords: { lat: 59.313249, lng: 18.109766 },
+					iconImage: './pins/birds_nest.png',
+					content: '<h2>Caparol</h2>',
+					title: "Caparol Färg"
+				},
+				{
 					coords: { lat: 59.315674, lng: 18.034229 },
-					iconImage: './pins/blue_MarkerH.png',
+					iconImage: './pins/birds_nest.png',
 					content: '<h2>Hornstull</h2>',
 					title: "Horstulls tunnelbana"
 				},
@@ -81,7 +93,7 @@
 			function sucess(pos) {
 				let crd = pos.coords;
 
-				map.setZoom(14);
+				map.setZoom(18);
 
 				// Loop through markers 
 				for (let i = 0; i < markers.length; i++) {
@@ -119,8 +131,8 @@
 			}
 
 			function showPosition(position) {
-				yourLocationDiv.innerHTML = "<h3>Your coordinates</h3>Latitude: " + position.coords.latitude +
-					"<br>Longitude: " + position.coords.longitude;
+				//yourLocationDiv.innerHTML = "<h3>Your coordinates</h3>Latitude: " + position.coords.latitude +
+				//	"<br>Longitude: " + position.coords.longitude;
 				myLatLong = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				yourMarker.setPosition(myLatLong);
 				map.setCenter(myLatLong);
