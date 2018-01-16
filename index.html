@@ -14,11 +14,18 @@
 
 		#messageDiv {
 			margin: 0 1rem 1rem 0;
-			display: inline;
+			z-index: 2;
+			position: fixed;
+			bottom: 50px;
+			right: 20px;
+			font-size: 1.5rem;
 		}
 
 		#nestButton {
 			font-size: 1.5rem;
+			z-index: 2;
+			position: fixed;
+			bottom: 50px;
 		}
 	</style>
 </head>
@@ -49,6 +56,16 @@
 				scaledSize: new google.maps.Size(50, 50), // scaled size
 			};
 
+			let nestBlueEggs = {
+				url: "./img/bird_nest_blue.png", // url
+				scaledSize: new google.maps.Size(50, 50), // scaled size
+			};
+
+			let nestRedEggs = {
+				url: "./img/bird_nest_red.png", // url
+				scaledSize: new google.maps.Size(50, 50), // scaled size
+			}
+
 			let redBirdIcon = {
 				url: "./img/red_kiwi.png", // url
 				scaledSize: new google.maps.Size(50, 50), // scaled size
@@ -60,11 +77,13 @@
 					title: 'YOU',
 					content: '<h2>YOU</<h2>',
 				});
+
 			let myLatLong = new google.maps.LatLng(0, 0);
 			// Map options
 			let options = {
-				zoom: 16,
-				center: { lat: 59.312527, lng: 18.061619 }
+				zoom: 10,
+				center: { lat: 59.312527, lng: 18.061619 },
+				draggable: false
 			};
 			let mapDiv = document.getElementById("map");
 			let map = new google.maps.Map(mapDiv, options);
@@ -79,8 +98,14 @@
 				},
 				{
 					coords: { lat: 59.313249, lng: 18.109766 },
-					iconImage: './pins/birds_nest.png',
-					content: '<h2>Uninhabitated</h2>',
+					iconImage: nestBlueEggs,
+					content: '<h2>Inabitated by Blue Birds</h2>',
+					title: "Caparol Färg"
+				},
+				{
+					coords: { lat: 59.313413, lng: 18.110002 },
+					iconImage: nestRedEggs,
+					content: '<h2>Inabitated by Red Birds</h2>',
 					title: "Caparol Färg"
 				},
 				{
@@ -169,7 +194,7 @@
 				messageDiv.innerHTML = "Get closer to a nest to snatch it";
 				if (distanceToNest < 30) {
 					nestButton.disabled = false;
-					messageDiv.innerHTML = "You can snatch a nest! =>"
+					messageDiv.innerHTML = "You can snatch a nest!"
 					yourMarker.setAnimation(google.maps.Animation.BOUNCE)
 				}
 				yourMarker.setPosition(myLatLong);
