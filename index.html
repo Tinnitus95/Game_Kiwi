@@ -32,7 +32,7 @@
 	<script>
 
 		function snatchNest() {
-			alert("Let's snatch some nest");
+			alert("Not implemented");
 		}
 
 		function initMap() {
@@ -44,11 +44,21 @@
 			let distanceToNest = 0;
 			let nestButton = document.getElementById("nestButton");
 
+			let nestEmptyIcon = {
+				url: "./img/bird_nest_empty.png", // url
+				scaledSize: new google.maps.Size(50, 50), // scaled size
+			};
+
+			let redBirdIcon = {
+				url: "./img/red_kiwi.png", // url
+				scaledSize: new google.maps.Size(50, 50), // scaled size
+			}
+
 			let yourMarker = new google.maps.Marker(
 				{
-					icon: './pins/kiwi_icon_blue.png',
+					icon: redBirdIcon,
 					title: 'YOU',
-					content: '<h2>YOU</<h2>'
+					content: '<h2>YOU</<h2>',
 				});
 			let myLatLong = new google.maps.LatLng(0, 0);
 			// Map options
@@ -63,7 +73,7 @@
 			let markers = [
 				{
 					coords: { lat: 59.312962, lng: 18.109841 },
-					iconImage: './pins/birds_nest.png',
+					iconImage: nestEmptyIcon,
 					content: '<h2>Uninhabitated</h2>',
 					title: "Intersection"
 				},
@@ -156,9 +166,11 @@
 				//	"<br>Longitude: " + position.coords.longitude;
 				myLatLong = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(myLatLong, nestLatLng);
-				messageDiv.innerHTML = distanceToNest;
+				messageDiv.innerHTML = "Get closer to a nest to snatch it";
 				if (distanceToNest < 30) {
 					nestButton.disabled = false;
+					messageDiv.innerHTML = "You can snatch a nest! =>"
+					yourMarker.setAnimation(google.maps.Animation.BOUNCE)
 				}
 				yourMarker.setPosition(myLatLong);
 				map.setCenter(myLatLong);
