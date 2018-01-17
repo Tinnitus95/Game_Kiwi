@@ -3,11 +3,7 @@ function initMap() {
         zoom: 5,
         center: { lat: 59.312527, lng: 18.061619 },
         disableDefaultUI: true,
-<<<<<<< HEAD
-        draggable: true
-=======
         draggable: true,
->>>>>>> daniel
     };
 
     let nestEmptyIcon = {
