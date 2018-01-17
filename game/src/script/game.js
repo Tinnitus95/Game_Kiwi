@@ -37,13 +37,12 @@ function initMap() {
         icon: redBirdIcon,
         title: 'YOU',
         content: '<h2>YOU</<h2>',
+        team: "red"
       });
 
-    let team;
-    team = "red";
 
-    if(team == "red") { playerMarker.icon = redBirdIcon; }
-    if(team == "blue") { playerMarker.icon = blueBirdIcon; }
+    if(playerMarker.team == "red") { playerMarker.icon = redBirdIcon; }
+    if(playerMarker.team == "blue") { playerMarker.icon = blueBirdIcon; }
 
     let nests = [
         {
@@ -163,11 +162,11 @@ function initMap() {
     function snatchNest(nest) {
       alert(`The nest ${nest.title} can now be snatched!`);
 
-      if(team == "blue") {
+      if(playerMarker.team == "blue") {
         nest.iconImage = nestBlueEggs;
         nest.content = "<h2>Inhabitated by Blue Birds</h2>";
       }
-      if(team == "red") {
+      if(playerMarker.team == "red") {
         nest.iconImage = nestRedEggs;
         nest.content = "<h2>Inhabitated by Red Birds</h2>";
       }
