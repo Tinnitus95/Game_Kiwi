@@ -37,7 +37,8 @@ function initMap() {
         icon: redBirdIcon,
         title: 'YOU',
         content: '<h2>YOU</<h2>',
-        team: "red"
+        team: "red",
+        score: 0
       });
 
 
@@ -165,11 +166,14 @@ function initMap() {
       if(playerMarker.team == "blue") {
         nest.iconImage = nestBlueEggs;
         nest.content = "<h2>Inhabitated by Blue Birds</h2>";
+        playerMarker.score++;
       }
       if(playerMarker.team == "red") {
         nest.iconImage = nestRedEggs;
         nest.content = "<h2>Inhabitated by Red Birds</h2>";
+        playerMarker.score++;
       }
       addMarker(nest);
+      console.log(playerMarker.score);
     }
 }
