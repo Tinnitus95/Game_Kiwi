@@ -83,11 +83,16 @@ function initMap() {
             title: "Sushi"
         },
         {
-            coords: { lat: 59.313086, lng: 18.118867 },
-            iconImage: nestEmptyIcon,
-            content: '<h2>Inabitated by Red Birds</h2>',
-            title: "Test"
-        },
+          coords: { lat: 59.313086, lng: 18.118867 },
+          iconImage: nestEmptyIcon,
+          content: '<h2>Inabitated by Red Birds</h2>',
+          title: "Test"
+      },
+          coords: { lat: 59.250724, lng: 17.810925 },
+          iconImage: nestEmptyIcon,
+          content: '<h2>Inabitated by Red Birds</h2>',
+          title: "Testeeeeeee"
+      },
     ]
 
     let mapDiv = document.getElementById("map");
