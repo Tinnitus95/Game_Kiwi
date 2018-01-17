@@ -3,7 +3,8 @@ function initMap() {
         zoom: 5,
         center: { lat: 59.312527, lng: 18.061619 },
         disableDefaultUI: true,
-        draggable: true
+        draggable: true,
+        minZoom: 14
     };
 
     let nestEmptyIcon = {
@@ -146,7 +147,6 @@ function initMap() {
         playerMarker.setMap(map);
         map.setZoom(18);
         checkNestProximity(playerLatLng);
-        map.setOptions({ minZoom: 14});
     }
 
     function checkNestProximity(playerLatLng) {
