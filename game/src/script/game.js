@@ -40,7 +40,7 @@ function initMap() {
       });
 
     let team;
-    team = "blue";
+    team = "red";
 
     if(team == "red") { playerMarker.icon = redBirdIcon; }
     if(team == "blue") { playerMarker.icon = blueBirdIcon; }
@@ -83,16 +83,17 @@ function initMap() {
             title: "Sushi"
         },
         {
-          coords: { lat: 59.313086, lng: 18.118867 },
-          iconImage: nestEmptyIcon,
-          content: '<h2>Inabitated by Red Birds</h2>',
-          title: "Test"
-      },
-          coords: { lat: 59.250724, lng: 17.810925 },
-          iconImage: nestEmptyIcon,
-          content: '<h2>Inabitated by Red Birds</h2>',
-          title: "Testeeeeeee"
-      },
+            coords: { lat: 59.313086, lng: 18.118867 },
+            iconImage: nestEmptyIcon,
+            content: '<h2>Inabitated by Red Birds</h2>',
+            title: "Test"
+        },
+        {
+            coords: { lat: 59.250724, lng: 17.810925 },
+            iconImage: nestEmptyIcon,
+            content: '<h2>Inabitated by Red Birds</h2>',
+            title: "Test"
+        },
     ]
 
     let mapDiv = document.getElementById("map");
@@ -145,6 +146,7 @@ function initMap() {
         playerMarker.setMap(map);
         map.setZoom(18);
         checkNestProximity(playerLatLng);
+        map.setOptions({ minZoom: 14});
     }
 
     function checkNestProximity(playerLatLng) {
