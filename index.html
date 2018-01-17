@@ -8,13 +8,13 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>PoI Grab</title>
+  <title>Nest:R</title>
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
   <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
 
@@ -30,7 +30,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">PoI Grab</a>
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Nest:R</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fa fa-bars"></i>
@@ -44,7 +44,7 @@
             <a class="nav-link js-scroll-trigger" href="#leaderboard">Leaderboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Game</a>
+            <a class="nav-link js-scroll-trigger" href="game/index.html">Game</a>
           </li>
 
           <li class="nav-item dropdown">
@@ -132,110 +132,8 @@
         <div class="row">
           <div class="col-lg-8 mx-auto">
             <h2>Game section</h2>
-            <div id="map">
-              <div id="yourlocation"></div>
-              <div id="map">
-              </div>
-              <script>
-              function initMap() {
-                let yourLocationDiv = document.getElementById("yourlocation");
-                let yourMarker = new google.maps.Marker(
-                  {
-                    icon: './pins/kiwi_icon_blue.png',
-                    title: 'YOU',
-                    content: '<h2>YOU</<h2>'
-                  });
-                  let myLatLong = new google.maps.LatLng(0, 0);
-                  // Map options
-                  let options = {
-                    zoom: 10,
-                    center: { lat: 59.312527, lng: 18.061619 }
-                  };
-                  let mapDiv = document.getElementById("map");
-                  let map = new google.maps.Map(mapDiv, options);
-                  // Array of markers
-                  let markers = [
-                    {
-                      coords: { lat: 59.315674, lng: 18.034229 },
-                      iconImage: './pins/blue_MarkerH.png',
-                      content: '<h2>Hornstull</h2>',
-                      title: "Horstulls tunnelbana"
-                    },
-                    {
-                      coords: { lat: 59.317787, lng: 18.050151 },
-                      iconImage: './pins/pink_MarkerZ.png',
-                      content: '<h2>Zinkendsdamm</h2>'
-                    },
-                    {
-                      coords: { lat: 59.316988, lng: 18.063240 },
-                      iconImage: './pins/orange_MarkerM.png',
-                      content: '<h2>Mariatorget</h2>'
-                    },
-                    {
-                      coords: { lat: 59.319473, lng: 18.072274 },
-                      iconImage: './pins/green_MarkerS.png',
-                      content: '<h2>Slussen</h2>'
-                    },
-                    {
-                      coords: { lat: 59.314338, lng: 18.073647 },
-                      iconImage: './pins/brown_MarkerM.png',
-                      content: '<h2>Medborgarplatsen</h2>'
-                    },
-                    {
-                      coords: { lat: 59.307866, lng: 18.075900 },
-                      iconImage: './pins/purple_MarkerS.png',
-                      content: '<h2>Skanstull</h2>'
-                    }
-                  ];
-                  if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(sucess);
-                    navigator.geolocation.watchPosition(showPosition);
-                  }
-                  function sucess(pos) {
-                    let crd = pos.coords;
-                    map.setZoom(14);
-                    // Loop through markers
-                    for (let i = 0; i < markers.length; i++) {
-                      // Add marker
-                      addMarker(markers[i]);
-                    }
-                  }
-                  function addMarker(props) {
-                    let marker = new google.maps.Marker({
-                      position: props.coords,
-                      map: map,
-                      //icon: props.iconImage
-                    });
-                    if (props.title) {
-                      marker.setTitle(props.title);
-                    }
-                    // Check for custom icon
-                    if (props.iconImage) {
-                      // Set icon image
-                      marker.setIcon(props.iconImage);
-                    }
-                    if (props.content) {
-                      let infoWindow = new google.maps.InfoWindow({
-                        content: props.content
-                      });
-                      marker.addListener('click', () => {
-                        infoWindow.open(map, marker);
-                      });
-                    }
-                  }
-                  function showPosition(position) {
-                    yourLocationDiv.innerHTML = "<h3>Your coordinates</h3>Latitude: " + position.coords.latitude +
-                    "<br>Longitude: " + position.coords.longitude;
-                    myLatLong = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    yourMarker.setPosition(myLatLong);
-                    map.setCenter(myLatLong);
-                    yourMarker.setMap(map);
-                  }
-                }
-                </script>
-                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuVpjSaYnMHPb1BryvrFyw2tER5UOsrjs&callback=initMap">
-                </script>
-              </div>
+
+
 
             </div>
           </div>
@@ -248,7 +146,7 @@
       <!-- Footer -->
       <footer>
         <div class="container text-center">
-          <p>Copyright &copy; Your Website 2017</p>
+          <p>Copyright &copy; Team Kiwi</p>
         </div>
       </footer>
 
