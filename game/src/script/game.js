@@ -26,12 +26,24 @@ function initMap() {
         scaledSize: new google.maps.Size(50, 50),
     };
 
+    let blueBirdIcon = {
+        url: "src/img/blue_kiwi.png",
+        scaledSize: new google.maps.Size(50, 50),
+    };
+
+
     let playerMarker = new google.maps.Marker(
-        {
-            icon: redBirdIcon,
-            title: 'YOU',
-            content: '<h2>YOU</<h2>',
-        });
+      {
+        icon: redBirdIcon,
+        title: 'YOU',
+        content: '<h2>YOU</<h2>',
+      });
+
+    let team;
+    team = "blue";
+
+    if(team == "red") { playerMarker.icon = redBirdIcon; }
+    if(team == "blue") { playerMarker.icon = blueBirdIcon; }
 
     let nests = [
         {
@@ -69,6 +81,12 @@ function initMap() {
             iconImage: nestRedEggs,
             content: '<h2>Inabitated by Red Birds</h2>',
             title: "Sushi"
+        },
+        {
+            coords: { lat: 59.313086, lng: 18.118867 },
+            iconImage: nestEmptyIcon,
+            content: '<h2>Inabitated by Red Birds</h2>',
+            title: "Test"
         },
     ]
 
@@ -128,14 +146,24 @@ function initMap() {
         for (let i = 0; i < nests.length; i++) {
             let nestLatLng = new google.maps.LatLng(nests[i].coords);
             distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(playerLatLng, nestLatLng);
-            console.log("Distance to " + nests[i].title + " is : " + distanceToNest);
-            if (distanceToNest < 20) {
+            console.log("Distance to " + nests[i].title + " is: " + Math.ceil(distanceToNest) + " meters");
+            if (distanceToNest < 21) {
                 snatchNest(nests[i]);
             }
         }
     }
 
     function snatchNest(nest) {
-        alert(`The ${nest.title} can now be snatched!`);
+      alert(`The nest ${nest.title} can now be snatched!`);
+
+      if(team == "blue") {
+        nest.iconImage = nestBlueEggs;
+        nest.content = "<h2>Inhabitated by Blue Birds</h2>";
+      }
+      if(team == "red") {
+        nest.iconImage = nestRedEggs;
+        nest.content = "<h2>Inhabitated by Red Birds</h2>";
+      }
+      addMarker(nest);
     }
 }
