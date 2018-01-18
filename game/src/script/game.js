@@ -168,12 +168,14 @@ function initMap() {
         nest.content = "<h2>Inhabitated by Blue Birds</h2>";
         playerMarker.score++;
         alert(`The nest ${nest.title} is now inhabited by the Blue Birds!`);
+        alert("Your score: " + playerMarker.score + ".");
       }
       if(playerMarker.team == "red") {
         nest.iconImage = nestRedEggs;
         nest.content = "<h2>Inhabitated by Red Birds</h2>";
         playerMarker.score++;
         alert(`The nest ${nest.title} is now inhabited by the Red Birds!`);
+        alert("Your score: " + playerMarker.score + ".");
       }
       addMarker(nest);
       console.log(playerMarker.score);
