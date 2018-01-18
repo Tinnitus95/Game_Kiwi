@@ -161,17 +161,19 @@ function initMap() {
     }
 
     function snatchNest(nest) {
-      alert(`The nest ${nest.title} can now be snatched!`);
+      // alert(`The nest ${nest.title} can now be snatched!`);
 
       if(playerMarker.team == "blue") {
         nest.iconImage = nestBlueEggs;
         nest.content = "<h2>Inhabitated by Blue Birds</h2>";
         playerMarker.score++;
+        alert(`The nest ${nest.title} is now inhabited by the Blue Birds!`);
       }
       if(playerMarker.team == "red") {
         nest.iconImage = nestRedEggs;
         nest.content = "<h2>Inhabitated by Red Birds</h2>";
         playerMarker.score++;
+        alert(`The nest ${nest.title} is now inhabited by the Red Birds!`);
       }
       addMarker(nest);
       console.log(playerMarker.score);
