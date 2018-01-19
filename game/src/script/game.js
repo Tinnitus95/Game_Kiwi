@@ -48,8 +48,8 @@ function initMap() {
 
     let nests = [
         {
-            coords: { lat: 59.316667, lng: 18.055983 },
-            title: 'Saras Tobak nest',
+            coords: { lat: 59.189952, lng: 17.615567 },
+            title: 'lukke',
             content: '<h2>Uninhabited</h2>',
             iconImage: nestEmptyIcon
         },
