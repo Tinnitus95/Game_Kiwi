@@ -33,7 +33,44 @@ function initMap() {
             content: '<h2>YOU</<h2>',
         });
 
-    let nests = []
+    let nests = [
+        {
+            coords: { lat: 59.316667, lng: 18.055983 },
+            title: 'Saras Tobak nest',
+            content: '<h2>Uninhabited</h2>',
+            iconImage: nestEmptyIcon
+        },
+        {
+            coords: { lat: 59.317020, lng: 18.055413 },
+            title: 'Angelos Pizzeria nest',
+            content: '<h2>Blue birds nest</h2>',
+            iconImage: nestBlueEggs
+        },
+        {
+            coords: { lat: 59.317199, lng: 18.054367 },
+            title: 'Nitty Gritty nest',
+            content: '<h2>Red birds nest</h2>',
+            iconImage: nestRedEggs
+        },
+        {
+            coords: { lat: 59.313249, lng: 18.109766 },
+            iconImage: nestBlueEggs,
+            content: '<h2>Inabitated by Blue Birds</h2>',
+            title: "Caparol Färg"
+        },
+        {
+            coords: { lat: 59.312962, lng: 18.109841 },
+            iconImage: nestEmptyIcon,
+            content: '<h2>Uninhabitated</h2>',
+            title: "Intersection"
+        },
+        {
+            coords: { lat: 59.313413, lng: 18.110002 },
+            iconImage: nestRedEggs,
+            content: '<h2>Inabitated by Red Birds</h2>',
+            title: "Sushi"
+        },
+    ]
 
     let mapDiv = document.getElementById("map");
 
@@ -78,7 +115,6 @@ function initMap() {
         }
     }
 
-
     function showPosition(position) {
         playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         playerMarker.setPosition(playerLatLng);
@@ -102,31 +138,4 @@ function initMap() {
     function snatchNest(nest) {
         alert(`The ${nest.title} can now be snatched!`);
     }
-
-
 }
-function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      nests = this.response;
-    }
-  };
-  xhttp.open("GET", "https://nestr-backend.herokuapp.com/api/nests", true);
-  xhttp.send();
-}
-function addLoadEvent(func) {
-  var oldonload = window.onload; // Save the current onload handler
-
-  if (typeof window.onload != 'function') // If there was no existing handler...
-    {
-    window.onload = func; // assign the new handler to window.onload
-  } else {
-    window.onload = function() // Overwrite existing handler with a new handler, consisting of...
-    {
-      oldonload(); // a call to the old saved handler plus...
-      func(); // a call to the new specified handler.
-    }
-  }
-}
-addLoadEvent(loadDoc);
