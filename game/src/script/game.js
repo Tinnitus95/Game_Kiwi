@@ -1,4 +1,7 @@
+var hiddenButton = document.getElementById("snatch_button");
 function initMap() {
+  document.getElementById("snatch_button").addEventListener("click", snatchNest);
+
     let mapOptions = {
         zoom: 5,
         center: { lat: 59.312527, lng: 18.061619 },
@@ -95,6 +98,13 @@ function initMap() {
             content: '<h2>Inabitated by Red Birds</h2>',
             title: "Test"
         },
+        {
+          coords: { lat:59.629110 , lng:17.844911},
+          iconImage: nestBlueEggs,
+          content: '<h2>Inabitated by Blue Birds</h2>',
+          title: "My House"
+
+        }
     ]
 
     let mapDiv = document.getElementById("map");
@@ -154,8 +164,12 @@ function initMap() {
             let nestLatLng = new google.maps.LatLng(nests[i].coords);
             distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(playerLatLng, nestLatLng);
             console.log("Distance to " + nests[i].title + " is: " + Math.ceil(distanceToNest) + " meters");
-            if (distanceToNest < 21) {
-                snatchNest(nests[i]);
+            if (distanceToNest < 21 && hiddenButton.style.display === "none") {
+                hiddenButton.style.display = "block";
+                console.log ("button is displayed");
+            }
+            else {
+              hiddenButton.style.display = "none";
             }
         }
     }
