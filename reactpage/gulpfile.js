@@ -37,7 +37,6 @@ gulp.task('styles', function(){
     return gulp.src('src/Assets/scss/**/*.scss')
     .pipe(sass())
     .pipe(prefix('last 2 versions'))
-
     .pipe(minifyCSS())
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('src/Assets/css'))
