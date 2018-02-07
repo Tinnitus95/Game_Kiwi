@@ -14,7 +14,7 @@ class Login extends Component {
 
     // this.handleSelectChange = this.handleSelectChange.bind(this);
 
-    
+
 
   }
     handleSelectChange = (event) => {
@@ -25,13 +25,44 @@ class Login extends Component {
     handleSubmit = (event) => {
        let username = this.refs.userName.value;
        let password = this.refs.passWord.value;
+       let teamId = this.state.value;
+       const url = "https://nestr-dev-backend.herokuapp.com/api/players/";
+
+       fetch(url, { 
+         headers: {
+           'Content-Type' : 'application/json'
+         },
+         method: 'POST',
+         body: JSON.stringify({
+           username: username,
+           password: password,
+           teamid:  teamId
+         }),
+       })
+       .then(function( res ){
+         console.log(res.status)
+         
+         return res.status
+
+       })
+       .catch(function(res){
+         console.log(res)
+       })
+
+
+
        console.log("User: " + username);
        console.log("Password: " + password);
        console.log("Team: " + this.state.value);
 
-    event.preventDefault();
+       event.preventDefault();
 
   }
+ hello(statusCode) {
+    return statusCode;
+
+ }
+
 
 
 
@@ -114,7 +145,7 @@ class Login extends Component {
                       </div>
                       <div className="form-group">
                         <label className="sr-only" htmlFor="form-pass-word">Password</label>
-                        <input type="text" name="passWord" placeholder="Last name..."  className="form-pass-word form-control" id="form-pass-word" ref="passWord"/>
+                        <input type="password" name="passWord" placeholder="Password...."  className="form-pass-word form-control" id="form-pass-word" ref="passWord"/>
                       </div>
                       <div className="form-group">
 
@@ -125,6 +156,8 @@ class Login extends Component {
 
                     </div>
                     <button type="submit" className="btn">Sign me up!</button>
+                    <div id="userFeedback">{this.hello()}</div>
+
                   </form>
                 </div>
               </div>
