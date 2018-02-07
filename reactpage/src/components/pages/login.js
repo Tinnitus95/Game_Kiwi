@@ -1,9 +1,42 @@
 import React, { Component } from 'react';
-import { alertme } from '../../Assets/js/alertme'
+import { loginscript } from '../../Assets/js/loginscript';
+import { registerscript } from '../../Assets/js/registerScript';
+
+
+
 
 
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
+
+    // this.handleSelectChange = this.handleSelectChange.bind(this);
+
+    
+
+  }
+    handleSelectChange = (event) => {
+    this.setState({value: event.target.value});
+
+  }
+
+    handleSubmit = (event) => {
+       let username = this.refs.userName.value;
+       let password = this.refs.passWord.value;
+       console.log("User: " + username);
+       console.log("Password: " + password);
+       console.log("Team: " + this.state.value);
+
+    event.preventDefault();
+
+  }
+
+
+
+
+
   render() {
     return (
       <div className="top-content">
@@ -36,7 +69,7 @@ class Login extends Component {
                         <label className="sr-only" htmlFor="form-password">Password</label>
                         <input type="password" name="form-password" placeholder="Password..." className="form-password form-control" id="form-password" ref="form-password"/>
                       </div>
-                      <button type="button" onClick={alertme} className="btn">Sign in!</button>
+                      <button type="button" onClick={loginscript} className="btn">Sign in!</button>
                     </form>
                   </div>
                 </div>
@@ -74,29 +107,25 @@ class Login extends Component {
                     </div>
                   </div>
                   <div className="form-bottom">
-                    <form role="form" action="" method="post" className="registration-form">
+                    <form role="form" action=""  className="registration-form" onSubmit={this.handleSubmit}>
                       <div className="form-group">
-                        <label className="sr-only" htmlFor="form-first-name">First name</label>
-                        <input type="text" name="form-first-name" placeholder="First name..." className="form-first-name form-control" id="form-first-name"/>
+                        <label className="sr-only" htmlFor="form-user-name">Username</label>
+                        <input type="text" name="userName" placeholder="Username..."  className="form-user-name form-control" id="form-user-name" ref="userName"/>
                       </div>
                       <div className="form-group">
-                        <label className="sr-only" htmlFor="form-last-name">Last name</label>
-                        <input type="text" name="form-last-name" placeholder="Last name..." className="form-last-name form-control" id="form-last-name"/>
+                        <label className="sr-only" htmlFor="form-pass-word">Password</label>
+                        <input type="text" name="passWord" placeholder="Last name..."  className="form-pass-word form-control" id="form-pass-word" ref="passWord"/>
                       </div>
                       <div className="form-group">
-                        <label className="sr-only" htmlFor="form-email">Email</label>
-                        <input type="text" name="form-email" placeholder="Email..." className="form-email form-control" id="form-email"/>
-                      </div>
-                      <div className="form-group">
-                        <label className="sr-only" htmlFor="form-about-yourself">About yourself</label>
-                        <textarea name="form-about-yourself" placeholder="About yourself..."
-                          className="form-about-yourself form-control" id="form-about-yourself"></textarea>
-                        </div>
-                        <button type="submit"  className="btn">Sign me up!</button>
-                      </form>
-                    </div>
-                  </div>
 
+                        <select name="team-select" value={this.state.value} onChange={this.handleSelectChange} ref="team-select">
+                          <option value="1">team 1</option>
+                          <option value="2">team 2</option>
+                        </select>
+
+                    </div>
+                    <button type="submit" className="btn">Sign me up!</button>
+                  </form>
                 </div>
               </div>
 
@@ -104,9 +133,14 @@ class Login extends Component {
           </div>
 
         </div>
+      </div>
 
-      );
-    }
-  }
+    </div>
 
-  export default Login;
+  );
+}
+
+}
+
+
+export default Login;

@@ -1,4 +1,4 @@
-export function alertme() {
+export function loginscript() {
 
   let player = {
     id : "" ,
