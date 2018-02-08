@@ -1,40 +1,5 @@
 var hiddenButton = document.getElementById("snatch_button");
 function initMap() {
-<<<<<<< HEAD
-    let mapOptions = {
-        zoom: 5,
-        center: { lat: 59.312527, lng: 18.061619 },
-        disableDefaultUI: true,
-        draggable: true,
-    };
-
-    let nestEmptyIcon = {
-        url: "src/img/bird_nest_empty.png",
-        scaledSize: new google.maps.Size(50, 50),
-    };
-
-    let nestBlueEggs = {
-        url: "src/img/bird_nest_blue.png",
-        scaledSize: new google.maps.Size(50, 50),
-    };
-
-    let nestRedEggs = {
-        url: "src/img/bird_nest_red.png",
-        scaledSize: new google.maps.Size(50, 50),
-    };
-
-    let redBirdIcon = {
-        url: "src/img/red_kiwi.png",
-        scaledSize: new google.maps.Size(50, 50),
-    };
-
-    let playerMarker = new google.maps.Marker(
-        {
-            icon: redBirdIcon,
-            title: 'YOU',
-            content: '<h2>YOU</<h2>',
-        });
-=======
   document.getElementById("snatch_button").addEventListener("click", snatchNest);
 
   let mapOptions = {
