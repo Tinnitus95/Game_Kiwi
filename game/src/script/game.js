@@ -84,7 +84,6 @@ function initMap() {
 
     if(playerMarker.team == "red") { playerMarker.icon = redBirdIcon; }
     if(playerMarker.team == "blue") { playerMarker.icon = blueBirdIcon; }
->>>>>>> oscar
 
     let nests = [
       {
@@ -188,22 +187,12 @@ function initMap() {
     }
 
     function showPosition(position) {
-<<<<<<< HEAD
-        playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        playerMarker.setPosition(playerLatLng);
-        map.setCenter(playerLatLng);
-        playerMarker.setMap(map);
-        map.setZoom(18);
-        checkNestProximity(playerLatLng);
-        map.setOptions({ minZoom: 14 });
-=======
       playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       playerMarker.setPosition(playerLatLng);
       map.setCenter(playerLatLng);
       playerMarker.setMap(map);
       map.setZoom(18);
       checkNestProximity(playerLatLng);
->>>>>>> oscar
     }
 
     function checkNestProximity(playerLatLng) {
