@@ -31,7 +31,7 @@ class Navbar extends Component {
                 <a className="nav-link js-scroll-trigger" href="#">Game</a>
               </li>
               <li className="nav-item">
-                <Link className="nav-link js-scroll-trigger" to="/Login">Login</Link>
+                <a className="nav-link js-scroll-trigger" href="https://loginpage.surge.sh">Login</a>
               </li>
 
             </ul>

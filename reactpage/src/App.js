@@ -28,7 +28,7 @@ class App extends Component {
           <Navbar/>
 
             <Route exact path='/' component={Homepage} />
-            <Route exact path='/Login' component={Login} />
+            
 
 
         </div>
