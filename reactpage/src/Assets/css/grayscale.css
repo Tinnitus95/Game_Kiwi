@@ -121,11 +121,9 @@ a:focus, a:hover {
 .masthead {
   display: table;
   width: 100%;
-  height: auto;
-  padding: 200px 0;
+  height: 100vh;
   text-align: center;
   color: white;
-  background: url("../img/intro-bg.jpg") no-repeat bottom center scroll;
   background-color: #FF6978;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -189,7 +187,6 @@ a:focus, a:hover {
 .leaderboard-section {
   height: 100vh;
   color: white;
-  background: url("../img/downloads-bg.jpg") no-repeat center center scroll;
   background-color: #0048A8;
   -webkit-background-size: cover;
   -moz-background-size: cover;

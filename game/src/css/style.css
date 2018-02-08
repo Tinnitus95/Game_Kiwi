@@ -1,7 +1,28 @@
 #map {
-    height: 100vh;
+  height: 100vh;
 }
 
 body {
-    background-color: #ff6978;
+  background-color: #ff6978;
+}
+
+.gmnoprint a, .gmnoprint span {
+  display:none;
+}
+.gmnoprint div {
+  background:none !important;
+}
+
+img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png"], a[href^="http://maps.google.com/maps"], img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4_hdpi.png"]{
+  display:none !important;
+}
+
+#snatch_button{
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 86%;
+  left: 41%;
+
 }
