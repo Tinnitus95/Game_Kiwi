@@ -1,15 +1,11 @@
-
-
 function initMap() {
-
-
-
 
   const url = "https://nestr-dev-backend.herokuapp.com/api/";
 
   let playerMarker;
   let playerIcon;
-  let nests ;
+  let nests;
+  let markers = [];
   let snatchable;
   let dateTime = new Date().toLocaleString();
 
@@ -50,70 +46,99 @@ function initMap() {
     url: "src/img/blue_kiwi.png",
     scaledSize: new google.maps.Size(50, 50)
   };
+
   let mapDiv = document.getElementById("map");
 
   let snatchButton = document.getElementById("snatch_button");
-      snatchButton.addEventListener("click", snatchNest);
+  snatchButton.addEventListener("click", snatchNest);
 
   let map = new google.maps.Map(mapDiv, mapOptions);
 
   let playerLatLng,
-  distanceToNest;
+    distanceToNest;
 
-  fetch(url + "players/").then((resp) => resp.json()).then(function(data) {
+  fetch(url + "players/")
+    .then((resp) => resp.json())
+    .then(function (data) {
+      let players = data;
+      for (var i = 0; i < players.length; i++) {
+        if (players[i].id == getCookie("nestrid")) {
 
-    let players = data;
+          if (players[i].teamname == "Red") {
+            playerIcon = redBirdIcon;
+          } else if (players[i].teamname == "Blue") {
+            playerIcon = blueBirdIcon;
 
-    for (var i = 0; i < players.length; i++) {
-      if (players[i].id == document.cookie) {
+          }
 
-        if (players[i].teamname == "Red") {
-          playerIcon = redBirdIcon;
-        } else if (players[i].teamname == "Blue") {
-          playerIcon = blueBirdIcon;
+          playerMarker = new google.maps.Marker({
+            icon: playerIcon,
+            playerId: players[i].id,
+            title: players[i].username,
+            team: players[i].teamname
+          });
 
         }
+      }
+      console.log(document.cookie);
+      console.log(playerMarker.title);
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+      }
+    });
 
-        playerMarker = new google.maps.Marker({
-          icon: playerIcon,
-          playerId: players[i].id,
-          title: players[i].username,
-          team: players[i].teamname
-        });
+  fetch(url + "nests/")
+    .then((resp) => resp.json())
+    .then(function (data) {
+
+      nests = data;
+
+      for (let i = 0; i < nests.length; i++) {
+
+        nests[i] = {
+          id: nests[i].id,
+          content: nests[i].name,
+          coords: {
+            lat: JSON.parse(nests[i].latitude),
+            lng: JSON.parse(nests[i].longitude)
+          },
+          inhabitedby: nests[i].inhabitedby
+
+        }
+        addMarker(nests[i]);
 
       }
-    }
-  });
+    });
 
 
-  fetch(url + "nests/").then((resp) => resp.json()).then(function(data) {
+  function drawMarkersFromAPI() {
+    fetch(url + "nests/").then((resp) => resp.json()).then(function (data) {
 
-    nests = data;
+      nests = data;
 
+      for (let i = 0; i < nests.length; i++) {
+
+        nests[i] = {
+          id: nests[i].id,
+          content: nests[i].name,
+          coords: {
+            lat: JSON.parse(nests[i].latitude),
+            lng: JSON.parse(nests[i].longitude)
+          },
+          inhabitedby: nests[i].inhabitedby
+
+        }
+        addMarker(nests[i]);
+
+      }
+    });
+  }
+  
+  function removeNests() {
     for (let i = 0; i < nests.length; i++) {
-
-      nests[i] = {
-        id: nests[i].id,
-        content: nests[i].name,
-        coords: {
-          lat: JSON.parse(nests[i].latitude),
-          lng: JSON.parse(nests[i].longitude)
-        },
-        inhabitedby: nests[i].inhabitedby
-
-      }
-      addMarker(nests[i]);
-
-    }//console.log(nests);
-    if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(showPosition);
+      markers[i].setMap(null);
     }
-  });
-
-
-  // setInterval(DrawNest, 5000);
-
-
+  }
 
   function addMarker(nest) {
     let marker = new google.maps.Marker({
@@ -121,10 +146,12 @@ function initMap() {
       map: map
     });
 
-    if (nest.inhabitedby == "Red"){
+    markers.push(marker);
+
+    if (nest.inhabitedby == "Red") {
       marker.setIcon(nestRedEggs);
     }
-    else if (nest.inhabitedby == "Blue"){
+    else if (nest.inhabitedby == "Blue") {
       marker.setIcon(nestBlueEggs);
     }
     else {
@@ -134,7 +161,7 @@ function initMap() {
     //   marker.setTitle(nest.title);
     // }
     if (nest.content) {
-      let infoWindow = new google.maps.InfoWindow({content: nest.content});
+      let infoWindow = new google.maps.InfoWindow({ content: nest.content });
 
       marker.addListener('click', () => {
         infoWindow.open(map, marker);
@@ -143,6 +170,7 @@ function initMap() {
   }
 
   function showPosition(position) {
+    //console.log(playerMarker);
     playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     playerMarker.setPosition(playerLatLng);
     map.setCenter(playerLatLng);
@@ -156,20 +184,23 @@ function initMap() {
     for (let i = 0; i < nests.length; i++) {
       let nestLatLng = new google.maps.LatLng(nests[i].coords);
       distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(playerLatLng, nestLatLng);
-      console.log("Distance to " + nests[i].content + " is: " + Math.ceil(distanceToNest) + " meters");
+      //console.log("Distance to " + nests[i].content + " is: " + Math.ceil(distanceToNest) + " meters");
       // if (distanceToNest < 21 && hiddenButton.style.display === "none") {
       //   hiddenButton.style.display = "block";
       //   console.log("button is displayed");
       // } else {
       //   hiddenButton.style.display = "none";
       // }
-    if (distanceToNest < 40 && nests[i].inhabitedby !=  playerMarker.team ){
+      if (distanceToNest < 40 && nests[i].inhabitedby != playerMarker.team) {
         snatchButton.disabled = false;
+        snatchButton.style.backgroundColor = 'green';
+        snatchButton.innerHTML = `Snatch "${nests[i].content}"`;
         console.log(new Date().toLocaleString());
         snatchable = nests[i];
       }
     }
   }
+
   function snatchNest() {
     console.log(playerMarker.playerId);
     console.log(snatchable.id);
@@ -186,18 +217,36 @@ function initMap() {
         timestamp: dateTime
       })
 
-    }).then(function(res) {
-        if(res.status == "201"){
+    }).then(function (res) {
+      if (res.status == "201") {
 
-        //addMarker(snatchable);
+        removeNests();
+        drawMarkersFromAPI();
+        snatchButton.style.backgroundColor = 'red';
+        snatchButton.disabled = true;
+        snatchButton.innerHTML = ':('
         console.log(res.status);
       }
 
-    }).catch(function(res) {
+    }).catch(function (res) {
       console.log(res)
     })
   }
 
-
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 }

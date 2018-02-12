@@ -14,7 +14,7 @@ function loginscript() {
 
     for (var i = 0; i < players.length; i++) {
       if ((players[i].username === player.username) && (players[i].password === player.password)) {
-        document.cookie = players[i].id + "; path=/;";
+        document.cookie = "nestrid=" + players[i].id + "; path=/;";
 
         window.location.href = "../game/index.html";
         player.id = players[i].id;
