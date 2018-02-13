@@ -7,7 +7,7 @@ function initMap() {
   let nests;
   let markers = [];
   let snatchable;
-  let dateTime = new Date().toLocaleString();
+  let dateTime = moment().format();
 
   // TODO: getcurrent position new google.maps.latlng(pos.coords.lat, pos.coords.lng)
   let mapOptions = {
