@@ -177,6 +177,7 @@ function initMap() {
     playerMarker.setMap(map);
     map.setZoom(18);
     checkNestProximity(playerLatLng);
+    document.getElementById("overlay").style.display = "none";
   }
 
   function checkNestProximity(playerLatLng) {
