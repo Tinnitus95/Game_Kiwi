@@ -269,6 +269,7 @@ function initMap() {
 
       function playerInfo() {
         let playerInfoMenu = document.getElementById("player-info-menu");
+        playerInfoMenu.innerHTML = "";
         let node = document.createElement("LI");
         let textNode = document.createTextNode(playerMarker.title);
         node.appendChild(textNode);
