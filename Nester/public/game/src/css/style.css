@@ -25,3 +25,62 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png"], a[href^="
   top: 86%;
   left: 41%;
 }
+
+.flex-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav {
+  overflow: hidden;
+  position: fixed;
+  z-index: 1;
+  padding-top: 90px;
+}
+
+
+.menu {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  transform: translateX(100%);
+  transition: all 0.2s ease;
+}
+
+.menu-open {
+  transform: translateX(0);
+}
+
+
+.menu li  {
+  list-style: none;
+  margin: 2px 0;
+}
+
+.menu a {
+  padding: 10px 15px;
+  display: block;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.2s ease-in;
+    background: #337ab7;
+}
+
+.menu a:hover {
+  text-decoration: none;
+  background: white;
+  color: black;
+}
+
+
+.toggle-menu {
+  box-shadow: none;
+  margin: 20px auto;
+  display: block;
+  position: absolute;
+  z-index: 2;
+  font-size: 3em;
+  cursor: pointer;
+  right: 10px;
+}

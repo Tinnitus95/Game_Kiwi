@@ -23,17 +23,17 @@ function initMap() {
   };
 
   let nestEmptyIcon = {
-    url: "src/img/bird_nest_empty.png",
+    url: "src/img/bird_nest_empty_new.png",
     scaledSize: new google.maps.Size(50, 50)
   };
 
   let nestBlueEggs = {
-    url: "src/img/bird_nest_blue.png",
+    url: "src/img/bird_nest_blue_new.png",
     scaledSize: new google.maps.Size(50, 50)
   };
 
   let nestRedEggs = {
-    url: "src/img/bird_nest_red.png",
+    url: "src/img/bird_nest_red_new.png",
     scaledSize: new google.maps.Size(50, 50)
   };
 
@@ -133,7 +133,7 @@ function initMap() {
       }
     });
   }
-  
+
   function removeNests() {
     for (let i = 0; i < nests.length; i++) {
       markers[i].setMap(null);
@@ -191,6 +191,7 @@ function initMap() {
       // } else {
       //   hiddenButton.style.display = "none";
       // }
+
       if (distanceToNest < 40 && nests[i].inhabitedby != playerMarker.team) {
         snatchButton.disabled = false;
         snatchButton.style.backgroundColor = 'green';
@@ -237,16 +238,38 @@ function initMap() {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
     }
     return "";
-}
+  }
 
 }
+
+
+// När dokmentet har laddat då kör denna funktion.
+$(document).ready(function () {
+  console.log('');
+  // När vi clickar på menu-toggle knappen.
+  $('.toggle-menu').click(function () {
+    toggleMenu();
+  });
+  //När vi trycker på en menylänk - stäng menyn.
+  $('.menu a').click(function () {
+    toggleMenu();
+  });
+  //Vår custom funktion som togglar menyn.
+  let toggleMenu = function () {
+    $('.menu').toggleClass('menu-open');
+    let $buttonText = $(this).text();
+    $buttonText == 'Open' ? $(this).text('Close') : $(this).text('Open');
+  };
+
+});
+
