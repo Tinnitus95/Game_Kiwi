@@ -192,7 +192,7 @@ function showPosition(position) {
   playerMarker.setMap(map);
   map.setZoom(18);
   checkNestProximity(playerLatLng);
-  document.getElementById("overlay").style.display = "none";
+  document.getElementById("loading-overlay").style.display = "none";
   playerInfo();
 }
 
