@@ -8,6 +8,8 @@ function initMap() {
   let markers = [];
   let snatchable;
   let dateTime = moment().format();
+  let currentteamscore;
+  let redteamscore, blueteamscore;
 
   // TODO: getcurrent position new google.maps.latlng(pos.coords.lat, pos.coords.lng)
   let mapOptions = {
@@ -55,208 +57,235 @@ function initMap() {
   let map = new google.maps.Map(mapDiv, mapOptions);
 
   let playerLatLng,
-    distanceToNest;
+  distanceToNest;
 
   fetch(url + "players/")
-    .then((resp) => resp.json())
-    .then(function (data) {
-      let players = data;
-      for (var i = 0; i < players.length; i++) {
-        if (players[i].id == getCookie("nestrid")) {
+  .then((resp) => resp.json())
+  .then(function (data) {
+    let players = data;
+    for (var i = 0; i < players.length; i++) {
+      if (players[i].id == getCookie("nestrid")) {
 
-          if (players[i].teamname == "Red") {
-            playerIcon = redBirdIcon;
-          } else if (players[i].teamname == "Blue") {
-            playerIcon = blueBirdIcon;
-
-          }
-
-          playerMarker = new google.maps.Marker({
-            icon: playerIcon,
-            playerId: players[i].id,
-            title: players[i].username,
-            team: players[i].teamname
-          });
+        if (players[i].teamname == "Red") {
+          playerIcon = redBirdIcon;
+        } else if (players[i].teamname == "Blue") {
+          playerIcon = blueBirdIcon;
 
         }
+
+        playerMarker = new google.maps.Marker({
+          icon: playerIcon,
+          playerId: players[i].id,
+          title: players[i].username,
+          team: players[i].teamname
+        });
+
       }
-      console.log(document.cookie);
-      console.log(playerMarker.title);
-      if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(showPosition);
-      }
-    });
+    }
+    console.log(document.cookie);
+    console.log(playerMarker.title);
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition(showPosition);
+    }
+  });
 
   fetch(url + "nests/")
-    .then((resp) => resp.json())
-    .then(function (data) {
+  .then((resp) => resp.json())
+  .then(function (data) {
 
-      nests = data;
+    nests = data;
 
-      for (let i = 0; i < nests.length; i++) {
-
-        nests[i] = {
-          id: nests[i].id,
-          content: nests[i].name,
-          coords: {
-            lat: JSON.parse(nests[i].latitude),
-            lng: JSON.parse(nests[i].longitude)
-          },
-          inhabitedby: nests[i].inhabitedby
-
-        }
-        addMarker(nests[i]);
-
-      }
-    });
-
-
-  function drawMarkersFromAPI() {
-    fetch(url + "nests/").then((resp) => resp.json()).then(function (data) {
-
-      nests = data;
-
-      for (let i = 0; i < nests.length; i++) {
-
-        nests[i] = {
-          id: nests[i].id,
-          content: nests[i].name,
-          coords: {
-            lat: JSON.parse(nests[i].latitude),
-            lng: JSON.parse(nests[i].longitude)
-          },
-          inhabitedby: nests[i].inhabitedby
-
-        }
-        addMarker(nests[i]);
-
-      }
-    });
-  }
-
-  function removeNests() {
     for (let i = 0; i < nests.length; i++) {
-      markers[i].setMap(null);
+
+      nests[i] = {
+        id: nests[i].id,
+        content: nests[i].name,
+        coords: {
+          lat: JSON.parse(nests[i].latitude),
+          lng: JSON.parse(nests[i].longitude)
+        },
+        inhabitedby: nests[i].inhabitedby
+
+      }
+      addMarker(nests[i]);
+
+    }
+  });
+  fetch(url + "currentteamscore/")
+  .then((resp) => resp.json())
+  .then(function (data) {
+    currentteamscore = data;
+    for (let i = 0; i < currentteamscore.length; i++) {
+      if (currentteamscore[i].name == "Red"){
+        redteamscore = currentteamscore[i].currentscore;
+      }
+      else{
+        blueteamscore = currentteamscore[i].currentscore;
+      }
     }
   }
+)
 
-  function addMarker(nest) {
-    let marker = new google.maps.Marker({
-      position: nest.coords,
-      map: map
+function drawMarkersFromAPI() {
+  fetch(url + "nests/").then((resp) => resp.json()).then(function (data) {
+
+    nests = data;
+
+    for (let i = 0; i < nests.length; i++) {
+
+      nests[i] = {
+        id: nests[i].id,
+        content: nests[i].name,
+        coords: {
+          lat: JSON.parse(nests[i].latitude),
+          lng: JSON.parse(nests[i].longitude)
+        },
+        inhabitedby: nests[i].inhabitedby
+
+      }
+      addMarker(nests[i]);
+
+    }
+  });
+}
+
+function removeNests() {
+  for (let i = 0; i < nests.length; i++) {
+    markers[i].setMap(null);
+  }
+}
+
+function addMarker(nest) {
+  let marker = new google.maps.Marker({
+    position: nest.coords,
+    map: map
+  });
+
+  markers.push(marker);
+
+  if (nest.inhabitedby == "Red") {
+    marker.setIcon(nestRedEggs);
+  }
+  else if (nest.inhabitedby == "Blue") {
+    marker.setIcon(nestBlueEggs);
+  }
+  else {
+    marker.setIcon(nestEmptyIcon);
+  }
+  // if (nest.title) {
+  //   marker.setTitle(nest.title);
+  // }
+  if (nest.content) {
+    let infoWindow = new google.maps.InfoWindow({ content: nest.content });
+
+    marker.addListener('click', () => {
+      infoWindow.open(map, marker);
     });
+  }
+}
 
-    markers.push(marker);
+function showPosition(position) {
+  //console.log(playerMarker);
+  playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  playerMarker.setPosition(playerLatLng);
+  map.setCenter(playerLatLng);
+  playerMarker.setMap(map);
+  map.setZoom(18);
+  checkNestProximity(playerLatLng);
+  document.getElementById("overlay").style.display = "none";
+  playerInfo();
+}
 
-    if (nest.inhabitedby == "Red") {
-      marker.setIcon(nestRedEggs);
-    }
-    else if (nest.inhabitedby == "Blue") {
-      marker.setIcon(nestBlueEggs);
-    }
-    else {
-      marker.setIcon(nestEmptyIcon);
-    }
-    // if (nest.title) {
-    //   marker.setTitle(nest.title);
+function checkNestProximity(playerLatLng) {
+
+  for (let i = 0; i < nests.length; i++) {
+    let nestLatLng = new google.maps.LatLng(nests[i].coords);
+    distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(playerLatLng, nestLatLng);
+    //console.log("Distance to " + nests[i].content + " is: " + Math.ceil(distanceToNest) + " meters");
+    // if (distanceToNest < 21 && hiddenButton.style.display === "none") {
+    //   hiddenButton.style.display = "block";
+    //   console.log("button is displayed");
+    // } else {
+    //   hiddenButton.style.display = "none";
     // }
-    if (nest.content) {
-      let infoWindow = new google.maps.InfoWindow({ content: nest.content });
 
-      marker.addListener('click', () => {
-        infoWindow.open(map, marker);
-      });
+    if (distanceToNest < 40 && nests[i].inhabitedby != playerMarker.team) {
+      snatchButton.disabled = false;
+      snatchButton.style.backgroundColor = 'green';
+      snatchButton.innerHTML = `Snatch "${nests[i].content}"`;
+      console.log(new Date().toLocaleString());
+      snatchable = nests[i];
     }
   }
+}
 
-  function showPosition(position) {
-    //console.log(playerMarker);
-    playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    playerMarker.setPosition(playerLatLng);
-    map.setCenter(playerLatLng);
-    playerMarker.setMap(map);
-    map.setZoom(18);
-    checkNestProximity(playerLatLng);
-    document.getElementById("loading-overlay").style.display = "none";
-  }
-
-  function checkNestProximity(playerLatLng) {
-
-    for (let i = 0; i < nests.length; i++) {
-      let nestLatLng = new google.maps.LatLng(nests[i].coords);
-      distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(playerLatLng, nestLatLng);
-      //console.log("Distance to " + nests[i].content + " is: " + Math.ceil(distanceToNest) + " meters");
-      // if (distanceToNest < 21 && hiddenButton.style.display === "none") {
-      //   hiddenButton.style.display = "block";
-      //   console.log("button is displayed");
-      // } else {
-      //   hiddenButton.style.display = "none";
-      // }
-
-      if (distanceToNest < 40 && nests[i].inhabitedby != playerMarker.team) {
-        snatchButton.disabled = false;
-        snatchButton.style.backgroundColor = 'green';
-        snatchButton.innerHTML = `Snatch "${nests[i].content}"`;
-        console.log(new Date().toLocaleString());
-        snatchable = nests[i];
-      }
-    }
-  }
-
-  function snatchNest() {
-    console.log(playerMarker.playerId);
-    console.log(snatchable.id);
+function snatchNest() {
+  console.log(playerMarker.playerId);
+  console.log(snatchable.id);
 
 
-    fetch(url + "playertimestampnest/", {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        playerid: playerMarker.playerId,
-        nestid: snatchable.id,
-        timestamp: dateTime
-      })
-
-    }).then(function (res) {
-      if (res.status == "201") {
-
-        removeNests();
-        drawMarkersFromAPI();
-        snatchButton.style.backgroundColor = 'red';
-        snatchButton.disabled = true;
-        snatchButton.innerHTML = ':('
-        console.log(res.status);
-      }
-
-    }).catch(function (res) {
-      console.log(res)
+  fetch(url + "playertimestampnest/", {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      playerid: playerMarker.playerId,
+      nestid: snatchable.id,
+      timestamp: dateTime
     })
-  }
 
-  function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
+  }).then(function (res) {
+    if (res.status == "201") {
+
+      removeNests();
+      drawMarkersFromAPI();
+      snatchButton.style.backgroundColor = 'red';
+      snatchButton.disabled = true;
+      snatchButton.innerHTML = ':('
+      console.log(res.status);
     }
-    return "";
+
+  }).catch(function (res) {
+    console.log(res)
+  })
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
   }
+  return "";
+}
+
+function playerInfo() {
+  let playerInfoMenu = document.getElementById("player-info-menu");
+  playerInfoMenu.innerHTML = "";
+  let node = document.createElement("LI");
+  let textNode = document.createTextNode(playerMarker.title);
+  node.appendChild(textNode);
+  playerInfoMenu.appendChild(node);
+  let scorenode = document.createElement("LI");
+  let scoreTextNode = document.createTextNode(`Red: ${redteamscore} Blue: ${blueteamscore}`);
+  scorenode.appendChild(scoreTextNode);
+  playerInfoMenu.appendChild(scorenode);
+}
 
 }
 
 
 // När dokmentet har laddat då kör denna funktion.
 $(document).ready(function () {
-  console.log('');
+  //console.log('');
   // När vi clickar på menu-toggle knappen.
   $('.toggle-menu').click(function () {
     toggleMenu();
