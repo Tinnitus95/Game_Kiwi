@@ -13,8 +13,14 @@
   background-image: url("../img/green_grass.jpeg");
   background-repeat:repeat;
   background-size:contain;
+  display: none;
+  text-align: center;
 }
+#game-overlay h2{
+  margin-top: 20%;
+  color: blue;
 
+}
 #first{
   position: fixed;
   z-index: 5;
@@ -22,11 +28,10 @@
 
 
 .overlay-logo{
-  background-image: url("../img/bird_nest_red_new.png");
+
   background-repeat:no-repeat;
-  background-size:contain;
-  height: 150px;
-  width: 150px;
+  
+
   position: absolute;
   top: 50%;
   left: 50%;
@@ -35,6 +40,13 @@
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
 }
+#taplistener{
+  background-image: url("../img/bird_nest_red_new.png");
+  height: 171px;
+  width: 171px;
+
+}
+
 
 
 /*  Ripple */

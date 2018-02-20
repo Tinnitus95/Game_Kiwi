@@ -28,7 +28,9 @@
       <img src="src/img/red_kiwi.png" alt="logo">
     </div>
   </div>
+
   <div id="game-overlay">
+    <h2>Break the egg to claim the nest as your own!</h2>
     <div class="overlay-logo" id="taplistener">
 
       <div id="counter"></div>
@@ -46,14 +48,15 @@
 
   </div>
   <button type="button" name="snatch" id="snatch_button" disabled>:(</button>
-  <script src="src/script/game.js"></script>
+  <script src="https://momentjs.com/downloads/moment.min.js"></script>
+  <script src="src/script/gamev2.js"></script>
   <script src="src/script/game-overlay.js" charset="utf-8"></script>
 
   <script src="src/script/ripple-effect.js" charset="utf-8"></script>
   <!-- Remember to put the Google-API reference last in the file -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuVpjSaYnMHPb1BryvrFyw2tER5UOsrjs&libraries=geometry&callback=initMap">
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuVpjSaYnMHPb1BryvrFyw2tER5UOsrjs&libraries=geometry&callback=startMap">
   </script>
-  <script src="https://momentjs.com/downloads/moment.min.js"></script>
+
 </body>
 
 </html>
