@@ -88,3 +88,12 @@ nav {
   cursor: pointer;
   right: 10px;
 }
+
+
+.gm-style-iw button{
+  background-color: transparent;
+  color: green;
+  border: 2px solid green;
+  text-transform: uppercase;
+  display: block;
+}
