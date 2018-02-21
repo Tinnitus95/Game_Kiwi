@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: #ff6978;
+  background-color: #fff;
 }
 
 .gmnoprint a, .gmnoprint span {
@@ -17,13 +17,15 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png"], a[href^="
   display:none !important;
 }
 
-#snatch_button{
-  color: yellow;
-  background-color: red;
-  font-size: 2rem;
+#main_button{
+  background-image: url("../img/snatchbutton_trans.png");
+  height: 80px;
+  width: 80px;
   position: absolute;
-  top: 86%;
-  left: 41%;
+  top: 83%;
+  left: 50%;
+  border: 0;
+  background-color: transparent;
 }
 
 .flex-container {
