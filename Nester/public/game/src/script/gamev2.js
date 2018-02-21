@@ -151,7 +151,7 @@ function createNestMarker(nest) {
           <h3>${marker.name}</h3>
           <p>Inhabited by: ${marker.inhabitedby}</p>
           <p>Latest snatcher: ${marker.latestsnatcher}</p>
-          <p>Snatch timestamp: ${moment(marker.snatchtimestamp).format('MMMM Do YYYY, h:mm:ss a')}</p>
+          <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').tz('Europe/Stockholm').format('YYYY-MM-DD HH:mm:ss') }</p>
           <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
           <button onclick="snatchNest(${marker.id})">Snatch nest</button>
           `)
