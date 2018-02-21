@@ -165,7 +165,7 @@ function createNestMarker(nest) {
     });
 
     nestMarkers.push(marker);
-}
+  }
 
   function createNestMarkers() {
     for (let i = 0; i < nests.length; i++) {
@@ -205,18 +205,23 @@ function createNestMarker(nest) {
   function snatchNest(id) {
 
     for (let i = 0; i < nestMarkers.length; i++) {
-      console.log(id);
-      console.log(nestMarkers[i].id);
 
-      if (distanceToNest < 40 && nestMarkers[i].inhabitedby != playerMarker.team) {
-        toggleoverlay(id);
 
-      } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
-        console.log("Your team already owns this nest!")
-      } else {
-        console.log("Get closer to this nest to snatch it!")
+      if (id == nestMarkers[i].id){
+        // console.log(id);
+        console.log(nestMarkers[i]);
+        
+        if (distanceToNest < 40 && nestMarkers[i].inhabitedby != playerMarker.team) {
+          toggleoverlay(id);
+
+        } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
+          console.log("Your team already owns this nest!")
+        } else {
+          console.log("Get closer to this nest to snatch it!")
+        }
       }
-      break;
+
+
     }
   }
 
