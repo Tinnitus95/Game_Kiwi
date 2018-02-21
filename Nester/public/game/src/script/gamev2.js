@@ -80,6 +80,11 @@ function showPosition(position) {
   playerMarker.setMap(map);
 }
 
+function zoomCenter() {
+  map.setCenter(playerLatLng);
+  map.setZoom(20);
+}
+
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
