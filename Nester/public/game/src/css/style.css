@@ -23,14 +23,14 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png"], a[href^="
   width: 80px;
   position: absolute;
   top: 83%;
-  left: 50%;
+  left: auto;
   border: 0;
   background-color: transparent;
 }
 
 .flex-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 nav {
