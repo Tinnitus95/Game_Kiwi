@@ -50,15 +50,11 @@ function loadGame(myPos) {
         playerInfo();
 
         console.log("Game start");
-        playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
-        map.setCenter(playerLatLng);
-        map.setZoom(19);
         navigator.geolocation.watchPosition(showPosition);
       })
     });
   });
 }
-
 function drawMarkersFromAPI() {
   fetch(url + "/nests/")
   .then((resp) => resp.json())
@@ -78,15 +74,15 @@ function removeNests() {
 function showPosition(position) {
   document.getElementById("loading-overlay").style.display = "none";
   playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-  //map.setCenter(playerLatLng);
-  //map.setZoom(17);
+  map.setCenter(playerLatLng);
+  map.setZoom(17);
   playerMarker.setPosition(playerLatLng);
   playerMarker.setMap(map);
 }
 
 function zoomCenter() {
   map.setCenter(playerLatLng);
-  map.setZoom(19);
+  map.setZoom(20);
 }
 
 function getCookie(cname) {
@@ -165,8 +161,9 @@ function createNestMarker(nest) {
       `)
     });
 
+
     nestMarkers.push(marker);
-  }
+}
 
   function createNestMarkers() {
     for (let i = 0; i < nests.length; i++) {
@@ -206,23 +203,18 @@ function createNestMarker(nest) {
   function snatchNest(id) {
 
     for (let i = 0; i < nestMarkers.length; i++) {
+      console.log(id);
+      console.log(nestMarkers[i].id);
 
+      if (distanceToNest < 40 && nestMarkers[i].inhabitedby != playerMarker.team) {
+        toggleoverlay(id);
 
-      if (id == nestMarkers[i].id){
-        // console.log(id);
-        console.log(nestMarkers[i]);
-        
-        if (distanceToNest < 40 && nestMarkers[i].inhabitedby != playerMarker.team) {
-          toggleoverlay(id);
-
-        } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
-          console.log("Your team already owns this nest!")
-        } else {
-          console.log("Get closer to this nest to snatch it!")
-        }
+      } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
+        console.log("Your team already owns this nest!")
+      } else {
+        console.log("Get closer to this nest to snatch it!")
       }
-
-
+      break;
     }
   }
 
