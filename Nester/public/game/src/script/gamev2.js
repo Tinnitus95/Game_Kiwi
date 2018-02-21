@@ -50,11 +50,14 @@ function loadGame(myPos) {
         playerInfo();
 
         console.log("Game start");
+        playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
+        map.setCenter(playerLatLng);
         navigator.geolocation.watchPosition(showPosition);
       })
     });
   });
 }
+
 function drawMarkersFromAPI() {
   fetch(url + "/nests/")
   .then((resp) => resp.json())
@@ -74,7 +77,7 @@ function removeNests() {
 function showPosition(position) {
   document.getElementById("loading-overlay").style.display = "none";
   playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-  map.setCenter(playerLatLng);
+  //map.setCenter(playerLatLng);
   map.setZoom(17);
   playerMarker.setPosition(playerLatLng);
   playerMarker.setMap(map);
