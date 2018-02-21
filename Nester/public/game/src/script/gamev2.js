@@ -52,6 +52,7 @@ function loadGame(myPos) {
         console.log("Game start");
         playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
         map.setCenter(playerLatLng);
+        map.setZoom(19);
         navigator.geolocation.watchPosition(showPosition);
       })
     });
@@ -78,14 +79,14 @@ function showPosition(position) {
   document.getElementById("loading-overlay").style.display = "none";
   playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   //map.setCenter(playerLatLng);
-  map.setZoom(17);
+  //map.setZoom(17);
   playerMarker.setPosition(playerLatLng);
   playerMarker.setMap(map);
 }
 
 function zoomCenter() {
   map.setCenter(playerLatLng);
-  map.setZoom(20);
+  map.setZoom(19);
 }
 
 function getCookie(cname) {
