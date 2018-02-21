@@ -8,6 +8,8 @@ function initMap() {
   let markers = [];
   let snatchable;
   let dateTime = moment().format();
+  let currentteamscore;
+  let redteamscore, blueteamscore;
 
   // TODO: getcurrent position new google.maps.latlng(pos.coords.lat, pos.coords.lng)
   let mapOptions = {
@@ -55,61 +57,45 @@ function initMap() {
   let map = new google.maps.Map(mapDiv, mapOptions);
 
   let playerLatLng,
-    distanceToNest;
+  distanceToNest;
 
   fetch(url + "players/")
-    .then((resp) => resp.json())
-    .then(function (data) {
-      let players = data;
-      for (var i = 0; i < players.length; i++) {
-        if (players[i].id == getCookie("nestrid")) {
+  .then((resp) => resp.json())
+  .then(function (data) {
+    let players = data;
+    for (var i = 0; i < players.length; i++) {
+      if (players[i].id == getCookie("nestrid")) {
 
-          if (players[i].teamname == "Red") {
-            playerIcon = redBirdIcon;
-          } else if (players[i].teamname == "Blue") {
-            playerIcon = blueBirdIcon;
-
-          }
-
-          playerMarker = new google.maps.Marker({
-            icon: playerIcon,
-            playerId: players[i].id,
-            title: players[i].username,
-            team: players[i].teamname
-          });
+        if (players[i].teamname == "Red") {
+          playerIcon = redBirdIcon;
+        } else if (players[i].teamname == "Blue") {
+          playerIcon = blueBirdIcon;
 
         }
-      }
-      console.log(document.cookie);
-      console.log(playerMarker.title);
-      if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(showPosition);
-      }
-    });
 
-  fetch(url + "nests/")
-    .then((resp) => resp.json())
-    .then(function (data) {
-
-      nests = data;
-
-      for (let i = 0; i < nests.length; i++) {
-
-        nests[i] = {
-          id: nests[i].id,
-          content: nests[i].name,
-          coords: {
-            lat: JSON.parse(nests[i].latitude),
-            lng: JSON.parse(nests[i].longitude)
-          },
-          inhabitedby: nests[i].inhabitedby
-
-        }
-        addMarker(nests[i]);
+        playerMarker = new google.maps.Marker({
+          icon: playerIcon,
+          playerId: players[i].id,
+          title: players[i].username,
+          team: players[i].teamname
+        });
 
       }
     });
-
+  fetch(url + "currentteamscore/")
+    .then((resp) => resp.json())
+    .then(function (data) {
+      currentteamscore = data;
+      for (let i = 0; i < currentteamscore.length; i++) {
+        if (currentteamscore[i].name == "Red") {
+          redteamscore = currentteamscore[i].currentscore;
+        }
+        else {
+          blueteamscore = currentteamscore[i].currentscore;
+        }
+      }
+    }
+    )
 
   function drawMarkersFromAPI() {
     fetch(url + "nests/").then((resp) => resp.json()).then(function (data) {
@@ -178,6 +164,7 @@ function initMap() {
     map.setZoom(18);
     checkNestProximity(playerLatLng);
     document.getElementById("overlay").style.display = "none";
+    playerInfo();
   }
 
   function checkNestProximity(playerLatLng) {
@@ -251,12 +238,61 @@ function initMap() {
     return "";
   }
 
+  function playerInfo() {
+    let playerInfoMenu = document.getElementById("player-info-menu");
+    playerInfoMenu.innerHTML = "";
+    let node = document.createElement("LI");
+    let textNode = document.createTextNode(playerMarker.title);
+    node.appendChild(textNode);
+    playerInfoMenu.appendChild(node);
+    let scorenode = document.createElement("LI");
+    let scoreTextNode = document.createTextNode(`Red: ${redteamscore} Blue: ${blueteamscore}`);
+    scorenode.appendChild(scoreTextNode);
+    playerInfoMenu.appendChild(scorenode);
+  }
+
+}
+
+  }).catch(function (res) {
+    console.log(res)
+  })
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function playerInfo() {
+  let playerInfoMenu = document.getElementById("player-info-menu");
+  playerInfoMenu.innerHTML = "";
+  let node = document.createElement("LI");
+  let textNode = document.createTextNode(playerMarker.title);
+  node.appendChild(textNode);
+  playerInfoMenu.appendChild(node);
+  let scorenode = document.createElement("LI");
+  let scoreTextNode = document.createTextNode(`Red: ${redteamscore} Blue: ${blueteamscore}`);
+  scorenode.appendChild(scoreTextNode);
+  playerInfoMenu.appendChild(scorenode);
+}
+
 }
 
 
 // När dokmentet har laddat då kör denna funktion.
 $(document).ready(function () {
-  console.log('');
+  //console.log('');
   // När vi clickar på menu-toggle knappen.
   $('.toggle-menu').click(function () {
     toggleMenu();
@@ -274,3 +310,4 @@ $(document).ready(function () {
 
 });
 
+});
