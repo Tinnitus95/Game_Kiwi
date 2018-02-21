@@ -26,7 +26,6 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png"], a[href^="
   left: auto;
   border: 0;
   background-color: transparent;
-  z-index: 3;
 }
 
 .flex-container {
