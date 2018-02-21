@@ -130,6 +130,8 @@ function createNestMarker(nest) {
       lng: JSON.parse(nest.longitude)
     },
     inhabitedby: nest.inhabitedby,
+    latestsnatcher: nest.latestsnatcher,
+    snatchtimestamp: nest.snatchtimestamp,
     map: map
   });
   if (marker.inhabitedby == "Red") {
@@ -142,15 +144,25 @@ function createNestMarker(nest) {
   let infoWindow = new google.maps.InfoWindow();
   // Av någon anledning kan man bara kalla på snatchNest med marker.id och inte hela markern.
   marker.addListener('click', () => {
-    console.log(infoWindow.isOpen());
     if (!infoWindow.isOpen()) {
       infoWindow.open(map, marker);
-      infoWindow.setContent(`
+      if (marker.inhabitedby != null){
+        infoWindow.setContent(`
+          <h3>${marker.name}</h3>
+          <p>Inhabited by: ${marker.inhabitedby}</p>
+          <p>Latest snatcher: ${marker.latestsnatcher}</p>
+          <p>Snatch timestamp: ${moment(marker.snatchtimestamp).format('MMMM Do YYYY, h:mm:ss a')}</p>
+          <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
+          <button onclick="snatchNest(${marker.id})">Snatch nest</button>
+          `)
+      }
+      else{
+        infoWindow.setContent(`
         <h3>${marker.name}</h3>
-        <p>Inhabited by: ${marker.inhabitedby}.</p>
-        <p>Current distance to nest is: ${checkNestProximity(marker)} meters.</p>
+        <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
         <button onclick="snatchNest(${marker.id})">Snatch nest</button>
         `)
+      }
     }
     else {
       infoWindow.close();
