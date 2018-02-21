@@ -27,6 +27,8 @@ function startMap() {
 }
 
 function loadGame(myPos) {
+  if (getCookie("nestrid") == "")
+    window.location.href = "../loginPage/index.html";
   fetch(url + '/players/' + getCookie("nestrid"))
     .then((resp) => resp.json())
     .then(function (data) {
