@@ -150,7 +150,8 @@ function createNestMarker(nest) {
     infoWindow.open(map, marker);
     infoWindow.setContent(`
       <h3>${marker.name}</h3>
-      <p>Current distance to nest is: ${checkNestProximity(marker)}</p>
+      <p>Inhabited by: ${marker.inhabitedby}.</p>
+      <p>Current distance to nest is: ${checkNestProximity(marker)} meters.</p>
       <button onclick="snatchNest(${marker.id})">Snatch nest</button>
       `)
     });
