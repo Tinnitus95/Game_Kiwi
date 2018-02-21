@@ -21,7 +21,7 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png"], a[href^="
   background-image: url("../img/snatchbutton_trans.png");
   height: 80px;
   width: 80px;
-  position: absolute;
+  position: fixed;
   top: 83%;
   left: auto;
   border: 0;
@@ -82,7 +82,7 @@ nav {
   box-shadow: none;
   margin: 20px auto;
   display: block;
-  position: absolute;
+  position: fixed;
   z-index: 2;
   font-size: 3em;
   cursor: pointer;
