@@ -172,6 +172,11 @@ function createNestMarker(nest) {
          `
         }
       }
+      else if (isNestSnatchable(marker)) {
+        infoWindowContent += `
+         <button onclick="snatchNest(${marker.id})">Snatch nest</button>
+         `
+      }
       infoWindow.setContent(infoWindowContent);
     }
     else {
