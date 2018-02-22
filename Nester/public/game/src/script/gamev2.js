@@ -17,7 +17,10 @@ let playerIcon,
   playerLatLng,
   redteamscore,
   blueteamscore,
-  currentteamscore;
+  currentteamscore,
+  nestRedEggs,
+  nestEmptyIcon,
+  nestBlueEggs;
 let dateTime = moment().format();
 
 function startMap() {
@@ -41,6 +44,7 @@ function loadGame(myPos) {
               currentteamscore = data;
               mapDiv = document.getElementById("map");
               map = new google.maps.Map(mapDiv, mapOptions);
+              createNestIcons();
               createPlayerMarker();
               createNestMarkers();
               setTeamScore();
@@ -118,19 +122,22 @@ function createPlayerMarker() {
   playerMarker = new google.maps.Marker({ icon: playerIcon, playerId: player.id, title: player.username, team: player.teamname });
 }
 
-function createNestMarker(nest) {
-  let nestRedEggs = {
+function createNestIcons() {
+  nestRedEggs = {
     url: "src/img/bird_nest_red_new.png",
     scaledSize: new google.maps.Size(50, 50)
   };
-  let nestEmptyIcon = {
+  nestEmptyIcon = {
     url: "src/img/bird_nest_empty_new.png",
     scaledSize: new google.maps.Size(50, 50)
   };
-  let nestBlueEggs = {
+  nestBlueEggs = {
     url: "src/img/bird_nest_blue_new.png",
     scaledSize: new google.maps.Size(50, 50)
   };
+}
+
+function createNestMarker(nest) {
   let marker = new google.maps.Marker({
     id: nest.id,
     name: nest.name,
@@ -143,6 +150,7 @@ function createNestMarker(nest) {
     snatchtimestamp: nest.snatchtimestamp,
     map: map
   });
+
   if (marker.inhabitedby == "Red") {
     marker.setIcon(nestRedEggs);
   } else if (marker.inhabitedby == "Blue") {
@@ -150,35 +158,42 @@ function createNestMarker(nest) {
   } else {
     marker.setIcon(nestEmptyIcon);
   }
-  let infoWindow = new google.maps.InfoWindow();
-  // Av någon anledning kan man bara kalla på snatchNest med marker.id och inte hela markern.
-  marker.addListener('click', () => {
 
+  let infoWindow = new google.maps.InfoWindow();
+
+  marker.addListener('click', () => {
+    //All nests have this content
     let infoWindowContent = `
       <h3>${marker.name}</h3>
       <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
     `
+    //If the window is closed
     if (!infoWindow.isOpen()) {
       infoWindow.open(map, marker);
+      //If the nest is inhabited
       if (marker.inhabitedby != null) {
         infoWindowContent += `
           <p>Inhabited by: ${marker.inhabitedby}</p>
           <p>Latest snatcher: ${marker.latestsnatcher}</p>
           <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').tz('Europe/Stockholm').format('YYYY-MM-DD HH:mm:ss')}</p>
           `
+        //If the player is close enough to snatch it
         if (isNestSnatchable(marker)) {
           infoWindowContent += `
          <button onclick="snatchNest(${marker.id})">Snatch nest</button>
          `
         }
       }
+      //If the nest is not inhabited but you are close enough to snatch it
       else if (isNestSnatchable(marker)) {
         infoWindowContent += `
          <button onclick="snatchNest(${marker.id})">Snatch nest</button>
          `
       }
+      //Write the content to the infowindow
       infoWindow.setContent(infoWindowContent);
     }
+    //If the window is open then close it
     else {
       infoWindow.close();
     }
