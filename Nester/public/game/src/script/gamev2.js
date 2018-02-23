@@ -92,6 +92,11 @@ function zoomCenter() {
   map.setZoom(19);
 }
 
+function logOut() {
+  document.cookie = "nestrid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  window.location.href = "../../../";
+}
+
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
