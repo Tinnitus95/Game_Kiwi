@@ -17,12 +17,19 @@ let playerIcon,
   playerLatLng,
   redteamscore,
   blueteamscore,
-  currentteamscore;
+  currentteamscore,
+  nestRedEggs,
+  nestEmptyIcon,
+  nestBlueEggs;
 let dateTime = moment().format();
+
 function startMap() {
   let myPos = navigator.geolocation.getCurrentPosition(loadGame);
 }
+
 function loadGame(myPos) {
+  if (getCookie("nestrid") == "")
+    window.location.href = "../loginPage/index.html";
   fetch(url + '/players/' + getCookie("nestrid"))
     .then((resp) => resp.json())
     .then(function (data) {
@@ -37,6 +44,7 @@ function loadGame(myPos) {
               currentteamscore = data;
               mapDiv = document.getElementById("map");
               map = new google.maps.Map(mapDiv, mapOptions);
+              createNestIcons();
               createPlayerMarker();
               createNestMarkers();
               setTeamScore();
@@ -54,6 +62,7 @@ function loadGame(myPos) {
         });
     });
 }
+
 function drawMarkersFromAPI() {
   fetch(url + "/nests/")
     .then((resp) => resp.json())
@@ -62,11 +71,13 @@ function drawMarkersFromAPI() {
       createNestMarkers();
     });
 }
+
 function removeNests() {
   for (let i = 0; i < nests.length; i++) {
     nestMarkers[i].setMap(null);
   }
 }
+
 function showPosition(position) {
   document.getElementById("loading-overlay").style.display = "none";
   playerLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -75,10 +86,12 @@ function showPosition(position) {
   playerMarker.setPosition(playerLatLng);
   playerMarker.setMap(map);
 }
+
 function zoomCenter() {
   map.setCenter(playerLatLng);
   map.setZoom(19);
 }
+
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
@@ -94,6 +107,7 @@ function getCookie(cname) {
   }
   return "";
 }
+
 function createPlayerMarker() {
   if (player.teamname == "Red") {
     playerIcon = {
@@ -107,19 +121,23 @@ function createPlayerMarker() {
   playerIcon.scaledSize = new google.maps.Size(50, 50);
   playerMarker = new google.maps.Marker({ icon: playerIcon, playerId: player.id, title: player.username, team: player.teamname });
 }
-function createNestMarker(nest) {
-  let nestRedEggs = {
+
+function createNestIcons() {
+  nestRedEggs = {
     url: "src/img/bird_nest_red_new.png",
     scaledSize: new google.maps.Size(50, 50)
   };
-  let nestEmptyIcon = {
+  nestEmptyIcon = {
     url: "src/img/bird_nest_empty_new.png",
     scaledSize: new google.maps.Size(50, 50)
   };
-  let nestBlueEggs = {
+  nestBlueEggs = {
     url: "src/img/bird_nest_blue_new.png",
     scaledSize: new google.maps.Size(50, 50)
   };
+}
+
+function createNestMarker(nest) {
   let marker = new google.maps.Marker({
     id: nest.id,
     name: nest.name,
@@ -128,8 +146,11 @@ function createNestMarker(nest) {
       lng: JSON.parse(nest.longitude)
     },
     inhabitedby: nest.inhabitedby,
+    latestsnatcher: nest.latestsnatcher,
+    snatchtimestamp: nest.snatchtimestamp,
     map: map
   });
+
   if (marker.inhabitedby == "Red") {
     marker.setIcon(nestRedEggs);
   } else if (marker.inhabitedby == "Blue") {
@@ -137,30 +158,55 @@ function createNestMarker(nest) {
   } else {
     marker.setIcon(nestEmptyIcon);
   }
+
   let infoWindow = new google.maps.InfoWindow();
-  // Av någon anledning kan man bara kalla på snatchNest med marker.id och inte hela markern.
+
   marker.addListener('click', () => {
-    console.log(infoWindow.isOpen());
+    //All nests have this content
+    let infoWindowContent = `
+      <h3>${marker.name}</h3>
+      <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
+    `
+    //If the window is closed
     if (!infoWindow.isOpen()) {
       infoWindow.open(map, marker);
-      infoWindow.setContent(`
-        <h3>${marker.name}</h3>
-        <p>Inhabited by: ${marker.inhabitedby}.</p>
-        <p>Current distance to nest is: ${checkNestProximity(marker)} meters.</p>
-        <button onclick="snatchNest(${marker.id})">Snatch nest</button>
-        `)
+      //If the nest is inhabited
+      if (marker.inhabitedby != null) {
+        infoWindowContent += `
+          <p>Inhabited by: ${marker.inhabitedby}</p>
+          <p>Latest snatcher: ${marker.latestsnatcher}</p>
+          <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').tz('Europe/Stockholm').format('YYYY-MM-DD HH:mm:ss')}</p>
+          `
+        //If the player is close enough to snatch it
+        if (isNestSnatchable(marker)) {
+          infoWindowContent += `
+         <button onclick="snatchNest(${marker.id})">Snatch nest</button>
+         `
+        }
+      }
+      //If the nest is not inhabited but you are close enough to snatch it
+      else if (isNestSnatchable(marker)) {
+        infoWindowContent += `
+         <button onclick="snatchNest(${marker.id})">Snatch nest</button>
+         `
+      }
+      //Write the content to the infowindow
+      infoWindow.setContent(infoWindowContent);
     }
+    //If the window is open then close it
     else {
       infoWindow.close();
     }
   });
   nestMarkers.push(marker);
 }
+
 function createNestMarkers() {
   for (let i = 0; i < nests.length; i++) {
     createNestMarker(nests[i]);
   }
 }
+
 function playerInfo() {
   let playerInfoMenu = document.getElementById("player-info-menu");
   playerInfoMenu.innerHTML = "";
@@ -173,6 +219,7 @@ function playerInfo() {
   scorenode.appendChild(scoreTextNode);
   playerInfoMenu.appendChild(scorenode);
 }
+
 function setTeamScore() {
   for (let i = 0; i < currentteamscore.length; i++) {
     if (currentteamscore[i].name == "Red") {
@@ -182,11 +229,13 @@ function setTeamScore() {
     }
   }
 }
+
 function checkNestProximity(marker) {
   distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(playerLatLng, marker.position);
-  console.log("Distance to " + marker.name + " is: " + Math.ceil(distanceToNest) + " meters");
+  //console.log("Distance to " + marker.name + " is: " + Math.ceil(distanceToNest) + " meters");
   return Math.ceil(distanceToNest).toString();
 }
+
 function snatchNest(id) {
   for (let i = 0; i < nestMarkers.length; i++) {
     if (id == nestMarkers[i].id) {
@@ -202,6 +251,7 @@ function snatchNest(id) {
     }
   }
 }
+
 function postNest(id) {
   fetch(url + "/playertimestampnest/", {
     headers: {
@@ -214,12 +264,32 @@ function postNest(id) {
       if (res.status == "201") {
         removeNests();
         drawMarkersFromAPI();
+        currentTeamScoreFromAPI();
         console.log(res.status);
       }
     }).catch(function (res) {
       console.log(res)
     })
 }
+
+function isNestSnatchable(marker) {
+  if (checkNestProximity(marker) < 40 && marker.inhabitedby != playerMarker.team) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function currentTeamScoreFromAPI() {
+  fetch(url + "/currentteamscore")
+    .then((resp) => resp.json())
+    .then(function (data) {
+      currentteamscore = data;
+      setTeamScore();
+      playerInfo();
+    });
+}
+
 // När dokmentet har laddat då kör denna funktion.
 $(document).ready(function () {
   //console.log('');
