@@ -223,6 +223,16 @@ function playerInfo() {
   let scoreTextNode = document.createTextNode(`Red: ${redteamscore} Blue: ${blueteamscore}`);
   scorenode.appendChild(scoreTextNode);
   playerInfoMenu.appendChild(scorenode);
+
+  let logoutnode = document.createElement("LI");
+  let logoutTextNode = document.createTextNode("Logout");
+
+  logoutnode.appendChild(logoutTextNode);
+  playerInfoMenu.appendChild(logoutnode);
+  logoutnode.addEventListener('click', logOut);
+  logoutnode.style.color = "red";
+
+
 }
 
 function setTeamScore() {
