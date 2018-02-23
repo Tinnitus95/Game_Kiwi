@@ -215,18 +215,27 @@ function createNestMarkers() {
 function playerInfo() {
   let playerInfoMenu = document.getElementById("player-info-menu");
   playerInfoMenu.innerHTML = "";
-  let node = document.createElement("LI");
-  let textNode = document.createTextNode(playerMarker.title);
-  node.appendChild(textNode);
-  playerInfoMenu.appendChild(node);
-  let scorenode = document.createElement("LI");
-  let scoreTextNode = document.createTextNode(`Red: ${redteamscore} Blue: ${blueteamscore}`);
-  scorenode.appendChild(scoreTextNode);
-  playerInfoMenu.appendChild(scorenode);
 
+  //Create a LI that holds the player Title
+  let titlenode = document.createElement("LI");
+  let titleTextNode = document.createTextNode(playerMarker.title);
+  titlenode.appendChild(titleTextNode);
+  playerInfoMenu.appendChild(titlenode);
+
+  let playerscorenode = document.createElement("LI");
+  let playerscoreTextNode = document.createTextNode(`Your Score:`);
+  playerscorenode.appendChild(playerscoreTextNode);
+  playerInfoMenu.appendChild(playerscorenode)
+
+  //Create a LI that holds the global team score
+  let teamscorenode = document.createElement("LI");
+  let teamscoreTextNode = document.createTextNode(`Red: ${redteamscore} Blue: ${blueteamscore}`);
+  teamscorenode.appendChild(teamscoreTextNode);
+  playerInfoMenu.appendChild(teamscorenode);
+
+  //Create a LI that acts as a logout button
   let logoutnode = document.createElement("LI");
   let logoutTextNode = document.createTextNode("Logout");
-
   logoutnode.appendChild(logoutTextNode);
   playerInfoMenu.appendChild(logoutnode);
   logoutnode.addEventListener('click', logOut);
