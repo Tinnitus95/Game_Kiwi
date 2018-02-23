@@ -89,11 +89,19 @@ nav {
   right: 10px;
 }
 
+.gm-style-iw {
+  display: flex;
+  /* justify-content: center; */
+}
 
-.gm-style-iw button{
+.gm-style-iw button {
   background-color: transparent;
   color: green;
   border: 2px solid green;
   text-transform: uppercase;
-  display: block;
+  left: auto;
+}
+
+.gm-style-iw p {
+  padding-bottom: 0px;
 }
