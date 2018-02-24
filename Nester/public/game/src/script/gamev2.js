@@ -8,20 +8,20 @@ let mapOptions = {
   minZoom: 14
 };
 let playerIcon,
-  playerMarker,
-  player,
-  nests,
-  nestMarkers = [],
-  map,
-  mapDiv,
-  playerLatLng,
-  redteamscore,
-  blueteamscore,
-  currentteamscore,
-  nestRedEggs,
-  nestEmptyIcon,
-  nestBlueEggs,
-  myLatestTimeStamp;
+playerMarker,
+player,
+nests,
+nestMarkers = [],
+map,
+mapDiv,
+playerLatLng,
+redteamscore,
+blueteamscore,
+currentteamscore,
+nestRedEggs,
+nestEmptyIcon,
+nestBlueEggs,
+myLatestTimeStamp;
 
 function startMap() {
   let myPos = navigator.geolocation.getCurrentPosition(loadGame);
@@ -29,54 +29,54 @@ function startMap() {
 
 function loadGame(myPos) {
   if (getCookie("nestrid") == "")
-    window.location.href = "../loginPage/index.html";
+  window.location.href = "../loginPage/index.html";
   fetch(url + '/playertimestampnests/latest')
+  .then((resp) => resp.json())
+  .then(function (data) {
+    myLatestTimeStamp = data[0].timestamp;
+    fetch(url + '/players/' + getCookie("nestrid"))
     .then((resp) => resp.json())
     .then(function (data) {
-      myLatestTimeStamp = data[0].timestamp;
-      fetch(url + '/players/' + getCookie("nestrid"))
+      player = data[0];
+      fetch(url + '/nests')
+      .then((resp) => resp.json())
+      .then(function (data) {
+        nests = data;
+        fetch(url + "/currentteamscore")
         .then((resp) => resp.json())
         .then(function (data) {
-          player = data[0];
-          fetch(url + '/nests')
-            .then((resp) => resp.json())
-            .then(function (data) {
-              nests = data;
-              fetch(url + "/currentteamscore")
-                .then((resp) => resp.json())
-                .then(function (data) {
-                  currentteamscore = data;
-                  mapDiv = document.getElementById("map");
-                  map = new google.maps.Map(mapDiv, mapOptions);
-                  createNestIcons();
-                  createPlayerMarker();
-                  createNestMarkers();
-                  setTeamScore();
-                  playerInfo();
-                  console.log("Game start");
-                  playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
-                  map.setCenter(playerLatLng);
-                  map.setZoom(19);
-                  navigator.geolocation.watchPosition(showPosition);
-                  google.maps.InfoWindow.prototype.isOpen = function () {
-                    var map = this.getMap();
-                    return (map !== null && typeof map !== "undefined");
-                  }
-                })
-            });
-        });
-    }); 
-    setInterval(()=> checklatestTimeStamp(),3000);
+          currentteamscore = data;
+          mapDiv = document.getElementById("map");
+          map = new google.maps.Map(mapDiv, mapOptions);
+          createNestIcons();
+          createPlayerMarker();
+          createNestMarkers();
+          setTeamScore();
+          playerInfo();
+          console.log("Game start");
+          playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
+          map.setCenter(playerLatLng);
+          map.setZoom(19);
+          navigator.geolocation.watchPosition(showPosition);
+          google.maps.InfoWindow.prototype.isOpen = function () {
+            var map = this.getMap();
+            return (map !== null && typeof map !== "undefined");
+          }
+        })
+      });
+    });
+  });
+  setInterval(()=> checklatestTimeStamp(),3000);
 }
 
-function drawMarkersFromAPI() {  
+function drawMarkersFromAPI() {
   console.log(nestMarkers);
   fetch(url + "/nests/")
-    .then((resp) => resp.json())
-    .then(function (data) {
-      nests = data;
-      createNestMarkers();
-    });
+  .then((resp) => resp.json())
+  .then(function (data) {
+    nests = data;
+    createNestMarkers();
+  });
 }
 
 function removeNests() {
@@ -178,8 +178,8 @@ function createNestMarker(nest) {
   marker.addListener('click', () => {
     //All nests have this content
     let infoWindowContent = `
-      <h3>${marker.name}</h3>
-      <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
+    <h3>${marker.name}</h3>
+    <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
     `
     //If the window is closed
     if (!infoWindow.isOpen()) {
@@ -187,22 +187,22 @@ function createNestMarker(nest) {
       //If the nest is inhabited
       if (marker.inhabitedby != null) {
         infoWindowContent += `
-          <p>Inhabited by: ${marker.inhabitedby}</p>
-          <p>Latest snatcher: ${marker.latestsnatcher}</p>
-          <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').tz('Europe/Stockholm').format('YYYY-MM-DD HH:mm:ss')}</p>
-          `
+        <p>Inhabited by: ${marker.inhabitedby}</p>
+        <p>Latest snatcher: ${marker.latestsnatcher}</p>
+        <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').tz('Europe/Stockholm').format('YYYY-MM-DD HH:mm:ss')}</p>
+        `
         //If the player is close enough to snatch it
         if (isNestSnatchable(marker)) {
           infoWindowContent += `
-         <button onclick="snatchNest(${marker.id})">Snatch nest</button>
-         `
+          <button onclick="snatchNest(${marker.id})">Snatch nest</button>
+          `
         }
       }
       //If the nest is not inhabited but you are close enough to snatch it
       else if (isNestSnatchable(marker)) {
         infoWindowContent += `
-         <button onclick="snatchNest(${marker.id})">Snatch nest</button>
-         `
+        <button onclick="snatchNest(${marker.id})">Snatch nest</button>
+        `
       }
       //Write the content to the infowindow
       infoWindow.setContent(infoWindowContent);
@@ -274,13 +274,18 @@ function snatchNest(id) {
     if (id == nestMarkers[i].id) {
       // console.log(id);
       //console.log(nestMarkers[i]);
-      if (distanceToNest < 40 && nestMarkers[i].inhabitedby != playerMarker.team) {
-        toggleoverlay(id);
-      } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
-        console.log("Your team already owns this nest!")
+      if (nestMarkers[i].inhabitedby != null){
+        if (distanceToNest < 40 && nestMarkers[i].inhabitedby != playerMarker.team) {
+          toggleoverlay(id);
+        } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
+          console.log("Your team already owns this nest!")
+        } else {
+          console.log("Get closer to this nest to snatch it!")
+        }
       } else {
-        console.log("Get closer to this nest to snatch it!")
+        postNest(id);
       }
+
     }
   }
 }
@@ -295,14 +300,14 @@ function postNest(id) {
   })
   .then(function (res) {
     if (res.status == "201") {
-        removeNests();
-        drawMarkersFromAPI();
-        currentTeamScoreFromAPI();
-        console.log(res.status);
-      }
-    }).catch(function (res) {
-      console.log(res)
-    })
+      removeNests();
+      drawMarkersFromAPI();
+      currentTeamScoreFromAPI();
+      console.log(res.status);
+    }
+  }).catch(function (res) {
+    console.log(res)
+  })
 }
 
 function isNestSnatchable(marker) {
@@ -315,30 +320,30 @@ function isNestSnatchable(marker) {
 
 function currentTeamScoreFromAPI() {
   fetch(url + "/currentteamscore")
-    .then((resp) => resp.json())
-    .then(function (data) {
-      currentteamscore = data;
-      setTeamScore();
-      playerInfo();
-    });
+  .then((resp) => resp.json())
+  .then(function (data) {
+    currentteamscore = data;
+    setTeamScore();
+    playerInfo();
+  });
 }
 
 function checklatestTimeStamp() {
   fetch(url + "/playertimestampnests/latest")
-    .then((resp) => resp.json())
-    .then(function (data) {
-      apiLatestTimeStamp = data[0].timestamp;
-      console.log(`My timestamp: ${myLatestTimeStamp} Database timestamp: ${apiLatestTimeStamp}`);
-      if (apiLatestTimeStamp !== myLatestTimeStamp) {
-        console.log("Updates availiable in DB");
-        removeNests();
-        drawMarkersFromAPI();
-        currentTeamScoreFromAPI();
-        myLatestTimeStamp = apiLatestTimeStamp;
-      } else {
-        console.log("No updates availiable");
-      }
-    });
+  .then((resp) => resp.json())
+  .then(function (data) {
+    apiLatestTimeStamp = data[0].timestamp;
+    console.log(`My timestamp: ${myLatestTimeStamp} Database timestamp: ${apiLatestTimeStamp}`);
+    if (apiLatestTimeStamp !== myLatestTimeStamp) {
+      console.log("Updates availiable in DB");
+      removeNests();
+      drawMarkersFromAPI();
+      currentTeamScoreFromAPI();
+      myLatestTimeStamp = apiLatestTimeStamp;
+    } else {
+      console.log("No updates availiable");
+    }
+  });
 }
 
 
@@ -358,7 +363,7 @@ $(document).ready(function () {
     $('.menu').toggleClass('menu-open');
     let $buttonText = $(this).text();
     $buttonText == 'Open'
-      ? $(this).text('Close')
-      : $(this).text('Open');
+    ? $(this).text('Close')
+    : $(this).text('Open');
   };
 });
