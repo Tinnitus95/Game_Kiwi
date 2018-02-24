@@ -23,6 +23,7 @@ function loginscript() {
       }
       else{
         message.innerHTML = `Sumting Wong`;
+        message.style.color = "red";
       }
 
     }

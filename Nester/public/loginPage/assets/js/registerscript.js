@@ -22,11 +22,13 @@ function registerscript() {
 
 
       message.innerHTML = `Account with username: ${username} successfully created!`;
+      message.style.color = "green";
       console.log(res.status);
 
     }
     else{
       message.innerHTML= `Sumting Wong`;
+      message.style.color = "red";
       console.log(res.status);
     }
   }).catch(function(res) {
