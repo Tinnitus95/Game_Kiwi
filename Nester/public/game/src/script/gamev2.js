@@ -133,7 +133,7 @@ function createPlayerMarker() {
     }
   }
   playerIcon.scaledSize = new google.maps.Size(50, 50);
-  playerMarker = new google.maps.Marker({ icon: playerIcon, playerId: player.id, title: player.username, team: player.teamname });
+  playerMarker = new google.maps.Marker({ icon: playerIcon, playerId: player.id, title: player.username, team: player.teamname, score: player.totalneststaken });
 }
 
 function createNestIcons() {
@@ -232,7 +232,7 @@ function playerInfo() {
   playerInfoMenu.appendChild(titlenode);
 
   let playerscorenode = document.createElement("LI");
-  let playerscoreTextNode = document.createTextNode(`Your Score:`);
+  let playerscoreTextNode = document.createTextNode(`My Total Score: ${playerMarker.score}`);
   playerscorenode.appendChild(playerscoreTextNode);
   playerInfoMenu.appendChild(playerscorenode)
 
