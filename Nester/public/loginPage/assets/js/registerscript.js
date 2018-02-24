@@ -26,7 +26,7 @@ function registerscript() {
 
     }
     else{
-      message.innerHTML= `Sumting wong`;
+      message.innerHTML= `Sumting Wong`;
       console.log(res.status);
     }
   }).catch(function(res) {

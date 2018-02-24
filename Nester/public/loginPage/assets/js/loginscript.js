@@ -1,7 +1,7 @@
 const url = "https://nestr-dev-backend.herokuapp.com/api/players/";
 
 function loginscript() {
-
+  let message = document.getElementById("login_message");
   let player = {
     id: "",
     username: document.getElementById("login-username").value,
@@ -21,7 +21,10 @@ function loginscript() {
 
         console.log(document.cookie);
       }
-      
+      else{
+        message.innerHTML = `Sumting Wong`;
+      }
+
     }
 
   })

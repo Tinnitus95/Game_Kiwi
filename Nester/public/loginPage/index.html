@@ -53,24 +53,27 @@
                 <div class="form-top-left">
                   <h3>Login to play NEST:R</h3>
                   <p>Enter username and password to log on:</p>
+                  <p id="login_message" style="color: red;">
+
+                  </p>
                 </div>
                 <div class="form-top-right">
                   <i class="fa fa-lock"></i>
                 </div>
               </div>
               <div class="form-bottom">
-                <form role="form"  class="login-form" >
+                <form role="form"  onsubmit="loginscript()"class="login-form" >
 
 
                   <div class="form-group">
                     <label class="sr-only" for="login-username">Username</label>
-                    <input type="text" name="login-username" placeholder="Username..." class="form-username form-control" id="login-username">
+                    <input type="text" name="login-username" placeholder="Username..."  class="form-username form-control" id="login-username" required>
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="login-password">Password</label>
-                    <input type="password" name="login-password" placeholder="Password..." class="form-password form-control" id="login-password">
+                    <input type="password" name="login-password" placeholder="Password..." class="form-password form-control" id="login-password" required >
                   </div>
-                  <button type="button" onclick="loginscript()"class="btn">Sign in!</button>
+                  <button type="submit" class="btn">Sign in!</button>
                 </form>
               </div>
             </div>
@@ -102,7 +105,7 @@
                 </div>
               </div>
               <div class="form-bottom">
-                <form role="form"  class="registration-form">
+                <form role="form" onsubmit="registerscript()" class="registration-form">
                   <div class="form-group">
                     <label class="sr-only" for="register-username">Username</label>
                     <input type="text" name="register-username" placeholder="Username..." class="register-username form-control" id="register-username" required>
@@ -121,7 +124,7 @@
                       <option value="2">Blue birds</option>
                     </select>
                   </div>
-                  <button type="button" onclick="registerscript()" class="btn">Sign me up!</button>
+                  <button type="submit" class="btn">Sign me up!</button>
                 </form>
               </div>
             </div>
@@ -152,6 +155,7 @@
   <script src="assets/js/jquery-1.11.1.min.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
   <script src="assets/js/jquery.backstretch.min.js"></script>
+  <script src="assets/js/preventDefault.js"></script>
   <script src="assets/js/loginscript.js"></script>
   <script src="assets/js/registerscript.js"></script>
   <script src="assets/js/scripts.js"></script>
