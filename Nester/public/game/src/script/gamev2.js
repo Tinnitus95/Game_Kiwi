@@ -270,12 +270,23 @@ function checkNestProximity(marker) {
 }
 
 function snatchNest(id) {
+  let nestColor = document.getElementById('taplistener');
   for (let i = 0; i < nestMarkers.length; i++) {
     if (id == nestMarkers[i].id) {
-      // console.log(id);
-      //console.log(nestMarkers[i]);
+
       if (nestMarkers[i].inhabitedby != null){
+
         if (distanceToNest < 40 && nestMarkers[i].inhabitedby != playerMarker.team) {
+          if (nestMarkers[i].inhabitedby === "Blue"){
+            console.log("blue")
+            nestColor.classList.add("blueNestImage");
+          }
+          else if (nestMarkers[i].inhabitedby === "Red"){
+            console.log("red")
+            nestColor.classList.add("redNestImage");
+          }
+
+
           toggleoverlay(id);
         } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
           console.log("Your team already owns this nest!")
@@ -345,6 +356,31 @@ function checklatestTimeStamp() {
     }
   });
 }
+function BGrandomiser(){
+
+  let element = document.getElementById('game-overlay');
+  let x = Math.floor((Math.random() * 10) + 6);
+
+  switch (x) {
+
+    case x=6:
+    element.classList.add("streetBG");
+    break;
+    case x=7:
+    element.classList.add("cobbleStoneBG");
+    break;
+    case x=8:
+    element.classList.add("streetartBG");
+    break;
+    case x=9:
+    element.classList.add("subwayBG");
+    break;
+    default:
+    element.classList.add("greenGrassBG");
+
+  }
+}
+
 
 
 // När dokmentet har laddat då kör denna funktion.

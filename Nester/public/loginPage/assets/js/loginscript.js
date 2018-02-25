@@ -1,5 +1,5 @@
 const url = "https://nestr-dev-backend.herokuapp.com/api/players/";
-
+let isValid;
 function loginscript() {
   let message = document.getElementById("login_message");
   let player = {
@@ -20,12 +20,16 @@ function loginscript() {
         player.id = players[i].id;
 
         console.log(document.cookie);
+        isValid = true;
       }
       else{
         message.innerHTML = `Sumting Wong`;
         message.style.color = "red";
       }
 
+
+    }if(!isValid){
+      message.innerHTML = `Sumting Wong`;
     }
 
   })

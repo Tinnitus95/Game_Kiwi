@@ -3,7 +3,8 @@ const taplisten = document.getElementById('taplistener');
 
 
 
-function toggleoverlay(id) {
+function toggleoverlay(id) {   
+  BGrandomiser();
   let counter = 20;
   x.style.display = "block";
   taplisten.addEventListener("click", function(){
