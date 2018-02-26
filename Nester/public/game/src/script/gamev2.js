@@ -270,12 +270,23 @@ function checkNestProximity(marker) {
 }
 
 function snatchNest(id) {
+  let nestColor = document.getElementById('taplistener');
   for (let i = 0; i < nestMarkers.length; i++) {
     if (id == nestMarkers[i].id) {
-      // console.log(id);
-      //console.log(nestMarkers[i]);
+
       if (nestMarkers[i].inhabitedby != null){
+
         if (distanceToNest < 40 && nestMarkers[i].inhabitedby != playerMarker.team) {
+          if (nestMarkers[i].inhabitedby === "Blue"){
+            console.log("blue")
+            nestColor.classList.add("blueNestImage");
+          }
+          else if (nestMarkers[i].inhabitedby === "Red"){
+            console.log("red")
+            nestColor.classList.add("redNestImage");
+          }
+
+
           toggleoverlay(id);
         } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
           console.log("Your team already owns this nest!")
@@ -345,6 +356,32 @@ function checklatestTimeStamp() {
     }
   });
 }
+function BGrandomiser(){
+
+  let element = document.getElementById('game-overlay');
+  let x = Math.floor((Math.random() * 10) + 6);
+
+  switch (x) {
+
+    case 6:
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/street_background_cobblestone.jpg)';
+    break;
+    case 7:
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/street_background.jpg)';
+    break;
+    case 8:
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/streetart_background.jpg)';
+    break;
+    case 9:
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/subway_background.jpg)';
+    break;
+    default:
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/green_grass.jpeg)'; 
+
+  }
+
+}
+
 
 
 // När dokmentet har laddat då kör denna funktion.

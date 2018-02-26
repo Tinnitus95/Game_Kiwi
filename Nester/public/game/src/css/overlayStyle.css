@@ -13,12 +13,26 @@
   align-items: center;
 }
 #game-overlay{
-  background-image: url("../img/green_grass.jpeg");
+
   background-repeat:repeat;
   background-size:contain;
   display: none;
   text-align: center;
 }
+
+/* .streetBG{
+  background-image: url("../img/street_background.jpg");
+}
+.cobbleStoneBG{
+  background-image: url("../img/street_background_cobblestone.jpg");
+}
+.streetartBG{
+  background-image: url("../img/streetart_background.jpg");
+}
+.subwayBG{
+  background-image: url("../img(subway_background.jpg)");
+} */
+
 #game-overlay h2{
   margin-top: 20%;
   color: blue;
@@ -53,10 +67,16 @@ font-size: 40px;
   -ms-transform: translate(-50%,-50%);
 }
 #taplistener{
-  background-image: url("../img/bird_nest_red_new.png");
+
   height: 171px;
   width: 171px;
 
+}
+.redNestImage{
+  background-image: url("../img/bird_nest_red_new.png");
+}
+.blueNestImage{
+  background-image: url("../img/bird_nest_blue_new.png");
 }
 
 /*  Ripple */
