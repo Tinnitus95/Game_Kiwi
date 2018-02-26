@@ -47,14 +47,14 @@
 align-self: flex-end;
 position: absolute;
 bottom: 125px;
-right: 38%;
+right: 41%;
 font-weight: bold;
 font-size: 40px;
 }
 
 @media screen and (max-width: 700px) and (orientation: portrait) {
   #loading-overlay h2 {
-    right: 19%;
+    right: 20%;
   }
 }
 @media screen and (max-width: 700px) and (orientation: landscape) {
