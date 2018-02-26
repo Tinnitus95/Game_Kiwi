@@ -33,7 +33,8 @@ function loadGame(myPos) {
   fetch(url + '/playertimestampnests/latest')
     .then((resp) => resp.json())
     .then(function (data) {
-      myLatestTimeStamp = data[0].timestamp;
+      myLatestTimeStamp = formatTimeStampSubtractOne(data[0].timestamp);
+      //console.log(myLatestTimeStamp);
       fetch(url + '/players/' + getCookie("nestrid"))
         .then((resp) => resp.json())
         .then(function (data) {
@@ -191,7 +192,7 @@ function createNestMarker(nest) {
         infoWindowContent += `
           <p>Inhabited by: ${marker.inhabitedby}</p>
           <p>Latest snatcher: ${marker.latestsnatcher}</p>
-          <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').tz('Europe/Stockholm').format('YYYY-MM-DD HH:mm:ss')}</p>
+          <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').format('YYYY-MM-DD HH:mm:ss')}</p>
           `
         //If the player is close enough to snatch it
         if (isNestSnatchable(marker)) {
@@ -304,12 +305,13 @@ function snatchNest(id) {
 }
 
 function postNest(id) {
+  myLatestTimeStamp = formatTimeStamp(moment().format());
   fetch(url + "/playertimestampnests/", {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify({ playerid: playerMarker.playerId, nestid: id, timestamp: moment().format() })
+    body: JSON.stringify({ playerid: playerMarker.playerId, nestid: id, timestamp: myLatestTimeStamp })
   })
     .then(function (res) {
       if (res.status == "201") {
@@ -345,7 +347,7 @@ function checklatestTimeStamp() {
   fetch(url + "/playertimestampnests/latest")
     .then((resp) => resp.json())
     .then(function (data) {
-      apiLatestTimeStamp = data[0].timestamp;
+      apiLatestTimeStamp = formatTimeStampSubtractOne(data[0].timestamp);
       //console.log(`My timestamp: ${myLatestTimeStamp} Database timestamp: ${apiLatestTimeStamp}`);
       if (apiLatestTimeStamp !== myLatestTimeStamp) {
         console.log("Updates availiable in DB");
@@ -383,6 +385,18 @@ function BGrandomiser() {
 
   }
 }
+
+// Format a timestamp
+function formatTimeStamp (timestamp) {
+  return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+}
+
+// Format a timestamp and subtract 1 hour
+function formatTimeStampSubtractOne (timestamp) {
+  return moment(timestamp).subtract(1, 'hours').format('YYYY-MM-DD HH:mm:ss');
+}
+
+
 
 // När dokmentet har laddat då kör denna funktion.
 $(document).ready(function () {
