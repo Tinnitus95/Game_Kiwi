@@ -46,14 +46,31 @@
 #loading-overlay h2 {
 align-self: flex-end;
 position: absolute;
-bottom: 138px;
-right: 72px;
+bottom: 125px;
+right: 41%;
 font-weight: bold;
 font-size: 40px;
 }
 
+@media screen and (max-width: 700px) and (orientation: portrait) {
+  #loading-overlay h2 {
+    right: 20%;
+    bottom: 12%
+  }
+}
+@media screen and (max-width: 700px) and (orientation: landscape) {
+  #loading-overlay h2 {
+  display: none;
+ }
+}
+@media screen and (min-width: 700px) and (orientation: portrait) {
+  #loading-overlay h2 {
+  display: none;
+ }
+}
 
-.overlay-logo{
+
+.overlay-logo {
 
   background-repeat:no-repeat;
 

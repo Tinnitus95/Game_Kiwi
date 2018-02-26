@@ -100,7 +100,7 @@ function showPosition(position) {
 
 function zoomCenter() {
   map.setCenter(playerLatLng);
-  map.setZoom(19);
+  map.setZoom(18);
 }
 
 function logOut() {
@@ -180,31 +180,31 @@ function createNestMarker(nest) {
   marker.addListener('click', () => {
     //All nests have this content
     let infoWindowContent = `
-    <h3>${marker.name}</h3>
-    <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
-    `
+      <h3>${marker.name}</h3>
+      <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
+      `
     //If the window is closed
     if (!infoWindow.isOpen()) {
       infoWindow.open(map, marker);
       //If the nest is inhabited
       if (marker.inhabitedby != null) {
         infoWindowContent += `
-        <p>Inhabited by: ${marker.inhabitedby}</p>
-        <p>Latest snatcher: ${marker.latestsnatcher}</p>
-        <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').tz('Europe/Stockholm').format('YYYY-MM-DD HH:mm:ss')}</p>
-        `
+          <p>Inhabited by: ${marker.inhabitedby}</p>
+          <p>Latest snatcher: ${marker.latestsnatcher}</p>
+          <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').tz('Europe/Stockholm').format('YYYY-MM-DD HH:mm:ss')}</p>
+          `
         //If the player is close enough to snatch it
         if (isNestSnatchable(marker)) {
           infoWindowContent += `
-          <button onclick="snatchNest(${marker.id})">Snatch nest</button>
-          `
+            <button onclick="snatchNest(${marker.id})">Snatch nest</button>
+            `
         }
       }
       //If the nest is not inhabited but you are close enough to snatch it
       else if (isNestSnatchable(marker)) {
         infoWindowContent += `
-        <button onclick="snatchNest(${marker.id})">Snatch nest</button>
-        `
+          <button onclick="snatchNest(${marker.id})">Snatch nest</button>
+          `
       }
       //Write the content to the infowindow
       infoWindow.setContent(infoWindowContent);
@@ -382,10 +382,7 @@ function BGrandomiser() {
       document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/green_grass.jpeg)';
 
   }
-
 }
-
-
 
 // När dokmentet har laddat då kör denna funktion.
 $(document).ready(function () {
@@ -407,3 +404,4 @@ $(document).ready(function () {
       : $(this).text('Open');
   };
 });
+
