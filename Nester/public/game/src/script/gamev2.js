@@ -56,7 +56,7 @@ function loadGame(myPos) {
           console.log("Game start");
           playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
           map.setCenter(playerLatLng);
-          map.setZoom(19);
+          map.setZoom(18);
           navigator.geolocation.watchPosition(showPosition);
           google.maps.InfoWindow.prototype.isOpen = function () {
             var map = this.getMap();
@@ -98,7 +98,7 @@ function showPosition(position) {
 
 function zoomCenter() {
   map.setCenter(playerLatLng);
-  map.setZoom(19);
+  map.setZoom(18);
 }
 
 function logOut() {
@@ -376,7 +376,7 @@ function BGrandomiser(){
     document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/subway_background.jpg)';
     break;
     default:
-    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/green_grass.jpeg)'; 
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/green_grass.jpeg)';
 
   }
 
