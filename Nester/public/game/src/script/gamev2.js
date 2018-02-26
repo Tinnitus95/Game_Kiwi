@@ -363,22 +363,23 @@ function BGrandomiser(){
 
   switch (x) {
 
-    case x=6:
-    element.classList.add("streetBG");
+    case 6:
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/street_background_cobblestone.jpg)';
     break;
-    case x=7:
-    element.classList.add("cobbleStoneBG");
+    case 7:
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/street_background.jpg)';
     break;
-    case x=8:
-    element.classList.add("streetartBG");
+    case 8:
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/streetart_background.jpg)';
     break;
-    case x=9:
-    element.classList.add("subwayBG");
+    case 9:
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/subway_background.jpg)';
     break;
     default:
-    element.classList.add("greenGrassBG");
+    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/green_grass.jpeg)'; 
 
   }
+
 }
 
 

@@ -23,13 +23,14 @@ function loginscript() {
         isValid = true;
       }
 
+    }if(!isValid){
+      message.innerHTML = `Sumting Wong`;
+      message.style.color = "red";
     }
 
 
-  }if(!isValid){
-    message.innerHTML = `Sumting Wong`;
-    message.style.color = "red";
-  }
+  })
 
-})
+
+
 };

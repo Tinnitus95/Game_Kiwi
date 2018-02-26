@@ -16,10 +16,8 @@
   display: none;
   text-align: center;
 }
-.greenGrassBG{
-  background-image: url("../img/green_grass.jpeg");
-}
-.streetBG{
+
+/* .streetBG{
   background-image: url("../img/street_background.jpg");
 }
 .cobbleStoneBG{
@@ -30,7 +28,7 @@
 }
 .subwayBG{
   background-image: url("../img(subway_background.jpg)");
-}
+} */
 
 #game-overlay h2{
   margin-top: 20%;
