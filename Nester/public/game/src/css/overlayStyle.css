@@ -8,6 +8,9 @@
   bottom: 0;
   background-color: rgba(255, 105, 120, 1);
   z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #game-overlay{
   background-image: url("../img/green_grass.jpeg");
@@ -24,6 +27,15 @@
 #first{
   position: fixed;
   z-index: 5;
+}
+
+#loading-overlay h2 {
+align-self: flex-end;
+position: absolute;
+bottom: 138px;
+right: 72px;
+font-weight: bold;
+font-size: 40px;
 }
 
 
@@ -67,4 +79,25 @@
     transform: scale(2);
     opacity: 0;
   }
+}
+
+.spin {
+  border: 10px solid black;
+  border-radius: 50%;
+  border-top: 10px solid #0048A8;
+  width: 250px;
+  height: 250px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+  /* 50% { transform: scale(1);} */
+}
+
+.overlay-logo img{
+  width: 175px;
+  height: auto;
 }
