@@ -57,7 +57,7 @@ function loadGame(myPos) {
                   console.log("Game start");
                   playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
                   map.setCenter(playerLatLng);
-                  map.setZoom(19);
+                  map.setZoom(18);
                   navigator.geolocation.watchPosition(showPosition);
                   google.maps.InfoWindow.prototype.isOpen = function () {
                     var map = this.getMap();
