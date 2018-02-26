@@ -8,20 +8,20 @@ let mapOptions = {
   minZoom: 14
 };
 let playerIcon,
-playerMarker,
-player,
-nests,
-nestMarkers = [],
-map,
-mapDiv,
-playerLatLng,
-redteamscore,
-blueteamscore,
-currentteamscore,
-nestRedEggs,
-nestEmptyIcon,
-nestBlueEggs,
-myLatestTimeStamp;
+  playerMarker,
+  player,
+  nests,
+  nestMarkers = [],
+  map,
+  mapDiv,
+  playerLatLng,
+  redteamscore,
+  blueteamscore,
+  currentteamscore,
+  nestRedEggs,
+  nestEmptyIcon,
+  nestBlueEggs,
+  myLatestTimeStamp;
 
 function startMap() {
   let myPos = navigator.geolocation.getCurrentPosition(loadGame);
@@ -29,61 +29,63 @@ function startMap() {
 
 function loadGame(myPos) {
   if (getCookie("nestrid") == "")
-  window.location.href = "../loginPage/index.html";
+    window.location.href = "../loginPage/index.html";
   fetch(url + '/playertimestampnests/latest')
-  .then((resp) => resp.json())
-  .then(function (data) {
-    myLatestTimeStamp = data[0].timestamp;
-    fetch(url + '/players/' + getCookie("nestrid"))
     .then((resp) => resp.json())
     .then(function (data) {
-      player = data[0];
-      fetch(url + '/nests')
-      .then((resp) => resp.json())
-      .then(function (data) {
-        nests = data;
-        fetch(url + "/currentteamscore")
+      myLatestTimeStamp = data[0].timestamp;
+      fetch(url + '/players/' + getCookie("nestrid"))
         .then((resp) => resp.json())
         .then(function (data) {
-          currentteamscore = data;
-          mapDiv = document.getElementById("map");
-          map = new google.maps.Map(mapDiv, mapOptions);
-          createNestIcons();
-          createPlayerMarker();
-          createNestMarkers();
-          setTeamScore();
-          playerInfo();
-          console.log("Game start");
-          playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
-          map.setCenter(playerLatLng);
-          map.setZoom(19);
-          navigator.geolocation.watchPosition(showPosition);
-          google.maps.InfoWindow.prototype.isOpen = function () {
-            var map = this.getMap();
-            return (map !== null && typeof map !== "undefined");
-          }
-        })
-      });
+          player = data[0];
+          fetch(url + '/nests')
+            .then((resp) => resp.json())
+            .then(function (data) {
+              nests = data;
+              fetch(url + "/currentteamscore")
+                .then((resp) => resp.json())
+                .then(function (data) {
+                  currentteamscore = data;
+                  mapDiv = document.getElementById("map");
+                  map = new google.maps.Map(mapDiv, mapOptions);
+                  createNestIcons();
+                  createPlayerMarker();
+                  createNestMarkers();
+                  setTeamScore();
+                  playerInfo();
+                  console.log("Game start");
+                  playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
+                  map.setCenter(playerLatLng);
+                  map.setZoom(19);
+                  navigator.geolocation.watchPosition(showPosition);
+                  google.maps.InfoWindow.prototype.isOpen = function () {
+                    var map = this.getMap();
+                    return (map !== null && typeof map !== "undefined");
+                  }
+                })
+            });
+        });
     });
-  });
-  setInterval(()=> checklatestTimeStamp(),3000);
+  setInterval(() => checklatestTimeStamp(), 3000);
 }
 
 function drawMarkersFromAPI() {
-  console.log(nestMarkers);
+  //console.log(nestMarkers);
   fetch(url + "/nests/")
-  .then((resp) => resp.json())
-  .then(function (data) {
-    nests = data;
-    createNestMarkers();
-  });
+    .then((resp) => resp.json())
+    .then(function (data) {
+      nests = data;
+      createNestMarkers();
+    });
 }
 
 function removeNests() {
-  for (let i = 0; i < nests.length; i++) {
-    nestMarkers[i].setMap(null);
+  if (nestMarkers.length != 0) {
+    for (let i = 0; i < nests.length; i++) {
+      nestMarkers[i].setMap(null);
+    }
+    nestMarkers.length = 0;
   }
-  nestMarkers.length = 0;
 }
 
 function showPosition(position) {
@@ -274,15 +276,15 @@ function snatchNest(id) {
   for (let i = 0; i < nestMarkers.length; i++) {
     if (id == nestMarkers[i].id) {
 
-      if (nestMarkers[i].inhabitedby != null){
+      if (nestMarkers[i].inhabitedby != null) {
 
         if (distanceToNest < 40 && nestMarkers[i].inhabitedby != playerMarker.team) {
-          if (nestMarkers[i].inhabitedby === "Blue"){
-            console.log("blue")
+          if (nestMarkers[i].inhabitedby === "Blue") {
+            //console.log("blue")
             nestColor.classList.add("blueNestImage");
           }
-          else if (nestMarkers[i].inhabitedby === "Red"){
-            console.log("red")
+          else if (nestMarkers[i].inhabitedby === "Red") {
+            //console.log("red")
             nestColor.classList.add("redNestImage");
           }
 
@@ -307,18 +309,18 @@ function postNest(id) {
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify({ playerid: playerMarker.playerId, nestid: id, timestamp: moment().format()})
+    body: JSON.stringify({ playerid: playerMarker.playerId, nestid: id, timestamp: moment().format() })
   })
-  .then(function (res) {
-    if (res.status == "201") {
-      removeNests();
-      drawMarkersFromAPI();
-      currentTeamScoreFromAPI();
-      console.log(res.status);
-    }
-  }).catch(function (res) {
-    console.log(res)
-  })
+    .then(function (res) {
+      if (res.status == "201") {
+        removeNests();
+        drawMarkersFromAPI();
+        currentTeamScoreFromAPI();
+        //console.log(res.status);
+      }
+    }).catch(function (res) {
+      console.log(res)
+    })
 }
 
 function isNestSnatchable(marker) {
@@ -331,32 +333,33 @@ function isNestSnatchable(marker) {
 
 function currentTeamScoreFromAPI() {
   fetch(url + "/currentteamscore")
-  .then((resp) => resp.json())
-  .then(function (data) {
-    currentteamscore = data;
-    setTeamScore();
-    playerInfo();
-  });
+    .then((resp) => resp.json())
+    .then(function (data) {
+      currentteamscore = data;
+      setTeamScore();
+      playerInfo();
+    });
 }
 
 function checklatestTimeStamp() {
   fetch(url + "/playertimestampnests/latest")
-  .then((resp) => resp.json())
-  .then(function (data) {
-    apiLatestTimeStamp = data[0].timestamp;
-    console.log(`My timestamp: ${myLatestTimeStamp} Database timestamp: ${apiLatestTimeStamp}`);
-    if (apiLatestTimeStamp !== myLatestTimeStamp) {
-      console.log("Updates availiable in DB");
-      removeNests();
-      drawMarkersFromAPI();
-      currentTeamScoreFromAPI();
-      myLatestTimeStamp = apiLatestTimeStamp;
-    } else {
-      console.log("No updates availiable");
-    }
-  });
+    .then((resp) => resp.json())
+    .then(function (data) {
+      apiLatestTimeStamp = data[0].timestamp;
+      //console.log(`My timestamp: ${myLatestTimeStamp} Database timestamp: ${apiLatestTimeStamp}`);
+      if (apiLatestTimeStamp !== myLatestTimeStamp) {
+        console.log("Updates availiable in DB");
+        removeNests();
+        drawMarkersFromAPI();
+        currentTeamScoreFromAPI();
+        myLatestTimeStamp = apiLatestTimeStamp;
+      } else {
+        //console.log("No updates availiable");
+      }
+    });
 }
-function BGrandomiser(){
+
+function BGrandomiser() {
 
   let element = document.getElementById('game-overlay');
   let x = Math.floor((Math.random() * 10) + 6);
@@ -364,19 +367,19 @@ function BGrandomiser(){
   switch (x) {
 
     case 6:
-    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/street_background_cobblestone.jpg)';
-    break;
+      document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/street_background_cobblestone.jpg)';
+      break;
     case 7:
-    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/street_background.jpg)';
-    break;
+      document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/street_background.jpg)';
+      break;
     case 8:
-    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/streetart_background.jpg)';
-    break;
+      document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/streetart_background.jpg)';
+      break;
     case 9:
-    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/subway_background.jpg)';
-    break;
+      document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/subway_background.jpg)';
+      break;
     default:
-    document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/green_grass.jpeg)'; 
+      document.getElementById('game-overlay').style.backgroundImage = 'url(src/img/green_grass.jpeg)';
 
   }
 
@@ -400,7 +403,7 @@ $(document).ready(function () {
     $('.menu').toggleClass('menu-open');
     let $buttonText = $(this).text();
     $buttonText == 'Open'
-    ? $(this).text('Close')
-    : $(this).text('Open');
+      ? $(this).text('Close')
+      : $(this).text('Open');
   };
 });
