@@ -26,6 +26,7 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png"], a[href^="
   left: auto;
   border: 0;
   background-color: transparent;
+  cursor: pointer;
 }
 
 #main_button:focus {
@@ -73,7 +74,6 @@ nav {
   font-size: 18px;
   transition: all 0.2s ease-in;
   background: #2A2B2A;
-  color:
 }
 
 .menu a:hover {
