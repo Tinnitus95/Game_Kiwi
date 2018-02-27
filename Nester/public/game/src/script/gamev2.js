@@ -255,6 +255,7 @@ function playerInfo() {
   playerInfoMenu.appendChild(logoutnode);
   logoutnode.addEventListener('click', logOut);
   logoutnode.style.color = "red";
+  logoutnode.style.cursor = "pointer";
 
 
 }
