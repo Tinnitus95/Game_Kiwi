@@ -233,12 +233,12 @@ function playerInfo() {
 
   //Create a LI that holds the player Title
   let titlenode = document.createElement("LI");
-  let titleTextNode = document.createTextNode(playerMarker.title);
+  let titleTextNode = document.createTextNode(`Welcome, ${playerMarker.title}!`);
   titlenode.appendChild(titleTextNode);
   playerInfoMenu.appendChild(titlenode);
 
   let playerscorenode = document.createElement("LI");
-  let playerscoreTextNode = document.createTextNode(`My Total Score: ${player.totalneststaken}`);
+  let playerscoreTextNode = document.createTextNode(`Total Snatches: ${player.totalneststaken}`);
   playerscorenode.appendChild(playerscoreTextNode);
   playerInfoMenu.appendChild(playerscorenode)
 
