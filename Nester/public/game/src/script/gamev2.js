@@ -80,6 +80,15 @@ function drawMarkersFromAPI() {
     });
 }
 
+function setScoreFromAPI() {
+  fetch(url + '/players/' + getCookie("nestrid"))
+    .then((resp) => resp.json())
+    .then(function (data) {
+      player = data[0];
+      playerInfo();
+    });
+}
+
 function removeNests() {
   if (nestMarkers.length != 0) {
     for (let i = 0; i < nests.length; i++) {
@@ -266,6 +275,8 @@ function setTeamScore() {
   }
 }
 
+
+
 function checkNestProximity(marker) {
   distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(playerLatLng, marker.position);
   //console.log("Distance to " + marker.name + " is: " + Math.ceil(distanceToNest) + " meters");
@@ -318,6 +329,7 @@ function postNest(id) {
         removeNests();
         drawMarkersFromAPI();
         currentTeamScoreFromAPI();
+        setScoreFromAPI();
         //console.log(res.status);
       }
     }).catch(function (res) {
@@ -418,4 +430,3 @@ $(document).ready(function () {
       : $(this).text('Open');
   };
 });
-
