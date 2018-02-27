@@ -81,8 +81,6 @@ function drawMarkersFromAPI() {
     });
 }
 
-
-
 function removeNests() {
   if (nestMarkers.length != 0) {
     for (let i = 0; i < nests.length; i++) {
@@ -144,16 +142,16 @@ function createPlayerMarker() {
 
 function createNestIcons() {
   nestRedEggs = {
-    url: "src/img/bird_nest_red_new.png",
-    scaledSize: new google.maps.Size(50, 50)
+    url: "src/img/test/bird_nest_red_new_small.png",
+    //scaledSize: new google.maps.Size(50, 50)
   };
   nestEmptyIcon = {
-    url: "src/img/bird_nest_empty_new.png",
-    scaledSize: new google.maps.Size(50, 50)
+    url: "src/img/test/bird_nest_empty_new_small.png",
+    //scaledSize: new google.maps.Size(50, 50)
   };
   nestBlueEggs = {
-    url: "src/img/bird_nest_blue_new.png",
-    scaledSize: new google.maps.Size(50, 50)
+    url: "src/img/test/bird_nest_blue_new_small.png",
+    //scaledSize: new google.maps.Size(50, 50)
   };
 }
 
@@ -277,13 +275,10 @@ function setTeamScore() {
 }
 
 function setTotalScore() {
-    if(player.totalneststaken === null) {
-      player.totalneststaken = "0";
-    }
+  if (player.totalneststaken === null) {
+    player.totalneststaken = "0";
   }
-
-
-
+}
 
 function checkNestProximity(marker) {
   distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(playerLatLng, marker.position);
