@@ -66,14 +66,17 @@ nav {
 
 .menu li {
   list-style: none;
-  padding: 10px 15px;
+  padding: 14px 15px 20px 0px;
   display: block;
   color: white;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 20px;
   transition: all 0.2s ease-in;
   background: #2A2B2A;
-  color:
+  color: ;
+
+  margin-bottom: 1px;
+  text-align: center;
 }
 
 .menu a:hover {
