@@ -53,6 +53,7 @@ function loadGame(myPos) {
                   createPlayerMarker();
                   createNestMarkers();
                   setTeamScore();
+                  setTotalScore();
                   playerInfo();
                   console.log("Game start");
                   playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
@@ -79,6 +80,8 @@ function drawMarkersFromAPI() {
       createNestMarkers();
     });
 }
+
+
 
 function removeNests() {
   if (nestMarkers.length != 0) {
@@ -236,12 +239,12 @@ function playerInfo() {
 
   //Create a LI that holds the player Title
   let titlenode = document.createElement("LI");
-  let titleTextNode = document.createTextNode(playerMarker.title);
+  let titleTextNode = document.createTextNode(`Welcome, ${playerMarker.title}!`);
   titlenode.appendChild(titleTextNode);
   playerInfoMenu.appendChild(titlenode);
 
   let playerscorenode = document.createElement("LI");
-  let playerscoreTextNode = document.createTextNode(`My Total Score: ${playerMarker.score}`);
+  let playerscoreTextNode = document.createTextNode(`Total Snatches: ${player.totalneststaken}`);
   playerscorenode.appendChild(playerscoreTextNode);
   playerInfoMenu.appendChild(playerscorenode)
 
@@ -258,6 +261,7 @@ function playerInfo() {
   playerInfoMenu.appendChild(logoutnode);
   logoutnode.addEventListener('click', logOut);
   logoutnode.style.color = "red";
+  logoutnode.style.cursor = "pointer";
 
 
 }
@@ -271,6 +275,15 @@ function setTeamScore() {
     }
   }
 }
+
+function setTotalScore() {
+    if(player.totalneststaken === null) {
+      player.totalneststaken = "0";
+    }
+  }
+
+
+
 
 function checkNestProximity(marker) {
   distanceToNest = google.maps.geometry.spherical.computeDistanceBetween(playerLatLng, marker.position);
@@ -324,6 +337,7 @@ function postNest(id) {
         removeNests();
         drawMarkersFromAPI();
         currentTeamScoreFromAPI();
+        setTotalPlayerScoreFromAPI();
         //console.log(res.status);
       }
     }).catch(function (res) {
@@ -345,6 +359,16 @@ function currentTeamScoreFromAPI() {
     .then(function (data) {
       currentteamscore = data;
       setTeamScore();
+      playerInfo();
+    });
+}
+
+function setTotalPlayerScoreFromAPI() {
+  fetch(url + '/players/' + getCookie("nestrid"))
+    .then((resp) => resp.json())
+    .then(function (data) {
+      player = data[0];
+      setTotalScore();
       playerInfo();
     });
 }
@@ -435,4 +459,3 @@ $(document).ready(function () {
       : $(this).text('Open');
   };
 });
-

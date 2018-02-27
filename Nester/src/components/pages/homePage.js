@@ -4,6 +4,10 @@ import {
 } from 'react-router-dom';
 
 
+
+const message = "Buildo uses cookies to guarantee users the employment of its site features, offering a better purchasing experience. By continuing to browse the site you're agreeing to our use of cookies."
+
+
 class Homepage extends Component {
   render() {
     return (
@@ -15,15 +19,19 @@ class Homepage extends Component {
                 <h1 className="brand-heading">NEST:R</h1>
                 <p className="intro-text">A game for the explorer.</p>
                 <Link className="btn btn-circle js-scroll-trigger" to='/about'>
-                  <i className="fa fa-angle-double-down animated"></i>
-                </Link>
-              </div>
+                <i className="fa fa-angle-double-down animated"></i>
+              </Link>
+
             </div>
           </div>
         </div>
+      </div>
+
     </header>
-  );
-}
+
+
+    );
+  }
 }
 
 export default Homepage;
