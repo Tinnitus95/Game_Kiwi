@@ -53,6 +53,7 @@ function loadGame(myPos) {
                   createPlayerMarker();
                   createNestMarkers();
                   setTeamScore();
+                  setTotalScore();
                   playerInfo();
                   console.log("Game start");
                   playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
@@ -80,14 +81,7 @@ function drawMarkersFromAPI() {
     });
 }
 
-function setScoreFromAPI() {
-  fetch(url + '/players/' + getCookie("nestrid"))
-    .then((resp) => resp.json())
-    .then(function (data) {
-      player = data[0];
-      playerInfo();
-    });
-}
+
 
 function removeNests() {
   if (nestMarkers.length != 0) {
@@ -244,7 +238,7 @@ function playerInfo() {
   playerInfoMenu.appendChild(titlenode);
 
   let playerscorenode = document.createElement("LI");
-  let playerscoreTextNode = document.createTextNode(`My Total Score: ${playerMarker.score}`);
+  let playerscoreTextNode = document.createTextNode(`My Total Score: ${player.totalneststaken}`);
   playerscorenode.appendChild(playerscoreTextNode);
   playerInfoMenu.appendChild(playerscorenode)
 
@@ -274,6 +268,13 @@ function setTeamScore() {
     }
   }
 }
+
+function setTotalScore() {
+    if(player.totalneststaken === null) {
+      player.totalneststaken = "0";
+    }
+  }
+
 
 
 
@@ -329,7 +330,7 @@ function postNest(id) {
         removeNests();
         drawMarkersFromAPI();
         currentTeamScoreFromAPI();
-        setScoreFromAPI();
+        setTotalPlayerScoreFromAPI();
         //console.log(res.status);
       }
     }).catch(function (res) {
@@ -351,6 +352,16 @@ function currentTeamScoreFromAPI() {
     .then(function (data) {
       currentteamscore = data;
       setTeamScore();
+      playerInfo();
+    });
+}
+
+function setTotalPlayerScoreFromAPI() {
+  fetch(url + '/players/' + getCookie("nestrid"))
+    .then((resp) => resp.json())
+    .then(function (data) {
+      player = data[0];
+      setTotalScore();
       playerInfo();
     });
 }
