@@ -50,6 +50,7 @@ bottom: 125px;
 right: 41%;
 font-weight: bold;
 font-size: 40px;
+color: black;
 }
 
 @media screen and (max-width: 700px) and (orientation: portrait) {
