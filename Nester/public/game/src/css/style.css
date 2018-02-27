@@ -110,3 +110,7 @@ nav {
 .gm-style-iw p {
   padding-bottom: 0px;
 }
+
+.gm-style-iw #nest-lock-message {
+  color: red;
+}

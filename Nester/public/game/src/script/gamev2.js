@@ -192,10 +192,16 @@ function createNestMarker(nest) {
         infoWindowContent += `
           <p>Inhabited by: ${marker.inhabitedby}</p>
           <p>Latest snatcher: ${marker.latestsnatcher}</p>
-          <p>Snatch timestamp: ${ moment(marker.snatchtimestamp).subtract(1, 'hours').format('YYYY-MM-DD HH:mm:ss')}</p>
+          <p>Snatch timestamp: ${formatTimeStampSubtractOne(marker.snatchtimestamp)}</p>
           `
+        //Is the nest locked for snatching
+        if (isNestLocked(marker.snatchtimestamp)) {
+          infoWindowContent += `
+          <p id="nest-lock-message">Snatch lock currently engaged!<p>
+          `
+        }
         //If the player is close enough to snatch it
-        if (isNestSnatchable(marker)) {
+        else if (isNestSnatchable(marker) && !isNestLocked(marker.snatchtimestamp)) {
           infoWindowContent += `
             <button onclick="snatchNest(${marker.id})">Snatch nest</button>
             `
@@ -387,13 +393,24 @@ function BGrandomiser() {
 }
 
 // Format a timestamp
-function formatTimeStamp (timestamp) {
+function formatTimeStamp(timestamp) {
   return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 }
 
 // Format a timestamp and subtract 1 hour
-function formatTimeStampSubtractOne (timestamp) {
+function formatTimeStampSubtractOne(timestamp) {
   return moment(timestamp).subtract(1, 'hours').format('YYYY-MM-DD HH:mm:ss');
+}
+
+function isNestLocked(timestamp) {
+  let lockedUntil = formatTimeStampSubtractOne(moment(timestamp).add(30, 'seconds'));
+  let now = moment().format();
+  console.log(now + " " + moment(lockedUntil).format());
+  if (moment(now).isAfter(lockedUntil)) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 
