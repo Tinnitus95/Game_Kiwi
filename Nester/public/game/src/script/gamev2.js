@@ -345,7 +345,7 @@ function postNest(id) {
         drawMarkersFromAPI();
         currentTeamScoreFromAPI();
         setTotalPlayerScoreFromAPI();
-        // setTotalNeutralNestsFromAPI();
+        setTotalNeutralNestsFromAPI();
         //console.log(res.status);
       }
     }).catch(function (res) {
@@ -377,20 +377,19 @@ function setTotalPlayerScoreFromAPI() {
     .then(function (data) {
       player = data[0];
       setTotalScore();
-      setTotalNeutralNests();
       playerInfo();
     });
 }
 
-// function setTotalNeutralNestsFromAPI() {
-//   fetch(url + '/nests')
-//     .then((resp) => resp.json())
-//     .then(function (data) {
-//       nests = data;
-//       setTotalNeutralNests();
-//       playerInfo();
-//       });
-// }
+function setTotalNeutralNestsFromAPI() {
+  fetch(url + '/nests')
+    .then((resp) => resp.json())
+    .then(function (data) {
+      nests = data;
+      setTotalNeutralNests();
+      playerInfo();
+      });
+}
 
 function checklatestTimeStamp() {
   fetch(url + "/playertimestampnests/latest")
