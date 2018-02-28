@@ -1,12 +1,7 @@
 //Global variables
 const url = "https://nestr-dev-backend.herokuapp.com/api";
-let mapOptions = {
-  zoom: 5,
-  disableDefaultUI: true,
-  draggable: true,
-  gestureHandling: 'greedy',
-  minZoom: 14
-};
+
+
 let playerIcon,
   playerMarker,
   player,
@@ -142,16 +137,16 @@ function createPlayerMarker() {
 
 function createNestIcons() {
   nestRedEggs = {
-    url: "src/img/test/bird_nest_red_new_small.png",
-    //scaledSize: new google.maps.Size(50, 50)
+    url: "src/img/bird_nest_red_new.png",
+    scaledSize: new google.maps.Size(50, 50)
   };
   nestEmptyIcon = {
-    url: "src/img/test/bird_nest_empty_new_small.png",
-    //scaledSize: new google.maps.Size(50, 50)
+    url: "src/img/bird_nest_empty_new.png",
+    scaledSize: new google.maps.Size(50, 50)
   };
   nestBlueEggs = {
-    url: "src/img/test/bird_nest_blue_new_small.png",
-    //scaledSize: new google.maps.Size(50, 50)
+    url: "src/img/bird_nest_blue_new.png",
+    scaledSize: new google.maps.Size(50, 50)
   };
 }
 
