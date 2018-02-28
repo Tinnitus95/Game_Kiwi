@@ -108,11 +108,11 @@
                 <form role="form" onsubmit="registerscript()" class="registration-form">
                   <div class="form-group">
                     <label class="sr-only" for="register-username">Username</label>
-                    <input type="text" name="register-username" placeholder="Username..." class="register-username form-control" id="register-username" required>
+                    <input type="text" name="register-username" placeholder="Username..." class="register-username form-control" id="register-username" minlength="4" maxlength="25" required>
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="register-password">Password</label>
-                    <input type="password" name="register-password" placeholder="Password..." class="register-password form-control" id="register-password" required>
+                    <input type="password" name="register-password" placeholder="Password..." class="register-password form-control" id="register-password" minlength="4" maxlength="50" required>
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="register-email">Email</label>
