@@ -179,7 +179,7 @@ function createNestMarker(nest) {
   marker.addListener('click', () => {
     //All nests have this content
     let infoWindowContent = `
-      <h3>${marker.name}</h3>
+      <h3>- ${marker.name} -</h3>
       <p>Current distance to nest is: ${checkNestProximity(marker)} meters</p>
       `
     //If the window is closed
