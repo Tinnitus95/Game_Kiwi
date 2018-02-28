@@ -186,6 +186,13 @@ img { max-width: 100%; }
   text-align: center;
 }
 
+.team-label {
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 300;
+  display: block;
+}
+
 
 /***** Footer *****/
 
