@@ -13,6 +13,7 @@ let playerIcon,
   redteamscore,
   blueteamscore,
   currentteamscore,
+  totalfreenests = 0,
   nestRedEggs,
   nestEmptyIcon,
   nestBlueEggs,
@@ -49,6 +50,7 @@ function loadGame(myPos) {
                   createNestMarkers();
                   setTeamScore();
                   setTotalScore();
+                  setTotalNeutralNests()
                   playerInfo();
                   console.log("Game start");
                   playerLatLng = new google.maps.LatLng(myPos.coords.latitude, myPos.coords.longitude);
@@ -247,6 +249,11 @@ function playerInfo() {
   teamscorenode.appendChild(teamscoreTextNode);
   playerInfoMenu.appendChild(teamscorenode);
 
+  let neutralnestsnode = document.createElement("LI");
+  let neutralnestsTextNode = document.createTextNode(`Neutral Nests: ${totalfreenests}`);
+  neutralnestsnode.appendChild(neutralnestsTextNode);
+  playerInfoMenu.appendChild(neutralnestsnode);
+
   //Create a LI that acts as a logout button
   let logoutnode = document.createElement("LI");
   let logoutTextNode = document.createTextNode("Logout");
@@ -265,6 +272,16 @@ function setTeamScore() {
       redteamscore = currentteamscore[i].currentscore;
     } else {
       blueteamscore = currentteamscore[i].currentscore;
+    }
+  }
+}
+
+function setTotalNeutralNests() {
+  //calculates total neutral nests
+  totalfreenests = 0;
+  for (let i = 0; i < nests.length; i++) {
+    if(nests[i].inhabitedby === null) {
+      totalfreenests++;
     }
   }
 }
@@ -328,6 +345,7 @@ function postNest(id) {
         drawMarkersFromAPI();
         currentTeamScoreFromAPI();
         setTotalPlayerScoreFromAPI();
+        // setTotalNeutralNestsFromAPI();
         //console.log(res.status);
       }
     }).catch(function (res) {
@@ -359,9 +377,20 @@ function setTotalPlayerScoreFromAPI() {
     .then(function (data) {
       player = data[0];
       setTotalScore();
+      setTotalNeutralNests();
       playerInfo();
     });
 }
+
+// function setTotalNeutralNestsFromAPI() {
+//   fetch(url + '/nests')
+//     .then((resp) => resp.json())
+//     .then(function (data) {
+//       nests = data;
+//       setTotalNeutralNests();
+//       playerInfo();
+//       });
+// }
 
 function checklatestTimeStamp() {
   fetch(url + "/playertimestampnests/latest")
