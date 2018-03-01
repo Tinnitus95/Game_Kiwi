@@ -196,7 +196,7 @@ function createNestMarker(nest) {
         //Is the nest locked for snatching
         if (isNestLocked(marker.snatchtimestamp)) {
           infoWindowContent += `
-          <p id="nest-lock-message">Snatch lock currently engaged!<p>
+          <p id="nest-lock-message">Nest-lock engaged!<p>
           `
         }
         //If the player is close enough to snatch it
