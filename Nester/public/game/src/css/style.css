@@ -46,7 +46,7 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png"], a[href^="
 nav {
   overflow: hidden;
   position: fixed;
-  z-index: 1;
+  z-index: 0;
   padding-top: 90px;
 }
 
@@ -116,4 +116,5 @@ nav {
 
 .gm-style-iw #nest-lock-message {
   color: red;
+  font-weight: bold;
 }
