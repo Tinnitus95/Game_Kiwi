@@ -17,7 +17,8 @@ let playerIcon,
   nestRedEggs,
   nestEmptyIcon,
   nestBlueEggs,
-  myLatestTimeStamp;
+  myLatestTimeStamp,
+  toggleMenuOpen = false;
 
 function startMap() {
   let myPos = navigator.geolocation.getCurrentPosition(loadGame);
@@ -280,7 +281,7 @@ function setTotalNeutralNests() {
   //calculates total neutral nests
   totalfreenests = 0;
   for (let i = 0; i < nests.length; i++) {
-    if(nests[i].inhabitedby === null) {
+    if (nests[i].inhabitedby === null) {
       totalfreenests++;
     }
   }
@@ -388,7 +389,7 @@ function setTotalNeutralNestsFromAPI() {
       nests = data;
       setTotalNeutralNests();
       playerInfo();
-      });
+    });
 }
 
 function checklatestTimeStamp() {
@@ -447,15 +448,13 @@ function formatTimeStampSubtractOne(timestamp) {
 function isNestLocked(timestamp) {
   let lockedUntil = formatTimeStampSubtractOne(moment(timestamp).add(30, 'seconds'));
   let now = moment().format();
-  console.log(now + " " + moment(lockedUntil).format());
+  //console.log(now + " " + moment(lockedUntil).format());
   if (moment(now).isAfter(lockedUntil)) {
     return false;
   } else {
     return true;
   }
 }
-
-
 
 // När dokmentet har laddat då kör denna funktion.
 $(document).ready(function () {
@@ -470,10 +469,19 @@ $(document).ready(function () {
   });
   //Vår custom funktion som togglar menyn.
   let toggleMenu = function () {
+    // Set toggleMenuOpen to its oppisite
+    toggleMenuOpen = !toggleMenuOpen;
     $('.menu').toggleClass('menu-open');
-    let $buttonText = $(this).text();
-    $buttonText == 'Open'
-      ? $(this).text('Close')
-      : $(this).text('Open');
+    // If the menu is open set the nav to z-index 1
+    if (toggleMenuOpen) {
+      $('nav').css('z-index', 1);
+    }
+    // If the menu is closed set the nav to z-index 0
+    else {
+      // Wait 100 ms for the animation to finish
+      setTimeout(() => {
+        $('nav').css('z-index', 0);
+      }, 200);
+    }
   };
 });
