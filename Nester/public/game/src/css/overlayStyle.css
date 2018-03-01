@@ -13,7 +13,7 @@
   align-items: center;
 }
 #game-overlay{
-
+  font-family: 'Coiny', cursive;
   background-repeat:no-repeat;
   background-size:cover;
   display: none;
@@ -21,21 +21,22 @@
 }
 
 /* .streetBG{
-  background-image: url("../img/street_background.jpg");
+background-image: url("../img/street_background.jpg");
 }
 .cobbleStoneBG{
-  background-image: url("../img/street_background_cobblestone.jpg");
+background-image: url("../img/street_background_cobblestone.jpg");
 }
 .streetartBG{
-  background-image: url("../img/streetart_background.jpg");
+background-image: url("../img/streetart_background.jpg");
 }
 .subwayBG{
-  background-image: url("../img(subway_background.jpg)");
+background-image: url("../img(subway_background.jpg)");
 } */
 
 #game-overlay h2{
   margin-top: 20%;
-  color: blue;
+  color: white;
+  text-shadow: 2px 2px black;
 
 }
 #first{
@@ -44,13 +45,13 @@
 }
 
 #loading-overlay h2 {
-align-self: flex-end;
-position: absolute;
-bottom: 125px;
-right: 41%;
-font-weight: bold;
-font-size: 40px;
-color: black;
+  align-self: flex-end;
+  position: absolute;
+  bottom: 125px;
+  right: 41%;
+  font-weight: bold;
+  font-size: 40px;
+  color: black;
 }
 
 @media screen and (max-width: 700px) and (orientation: portrait) {
@@ -61,13 +62,21 @@ color: black;
 }
 @media screen and (max-width: 700px) and (orientation: landscape) {
   #loading-overlay h2 {
-  display: none;
- }
+    display: none;
+  }
 }
 @media screen and (min-width: 700px) and (orientation: portrait) {
   #loading-overlay h2 {
-  display: none;
- }
+    display: none;
+  }
+}
+
+#counter{
+  color: white;
+  font-weight: bold;
+  font-size: 37px;
+  text-shadow: 2px 2px black;
+  margin-top: 40%;
 }
 
 
@@ -85,7 +94,7 @@ color: black;
   -ms-transform: translate(-50%,-50%);
 }
 #taplistener{
-
+  top: 65%;
   height: 171px;
   width: 171px;
 
