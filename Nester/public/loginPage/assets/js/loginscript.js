@@ -25,7 +25,7 @@ function loginscript() {
 
     }if(!isValid){
       message.innerHTML = `Sumting Wong`;
-      message.style.color = "red";
+      message.style.color = "#ffe400";
     }
 
 
