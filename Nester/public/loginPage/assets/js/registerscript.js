@@ -28,7 +28,7 @@ function registerscript() {
     }
     else{
       message.innerHTML= `Sumting Wong`;
-      message.style.color = "red";
+      message.style.color = "ffe400";
       console.log(res.status);
     }
   }).catch(function(res) {
