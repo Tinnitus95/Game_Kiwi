@@ -1,0 +1,150 @@
+#loading-overlay, #game-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 105, 120, 1);
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#game-overlay{
+  font-family: 'Coiny', cursive;
+  background-repeat:no-repeat;
+  background-size:cover;
+  display: none;
+  text-align: center;
+}
+
+/* .streetBG{
+background-image: url("../img/street_background.jpg");
+}
+.cobbleStoneBG{
+background-image: url("../img/street_background_cobblestone.jpg");
+}
+.streetartBG{
+background-image: url("../img/streetart_background.jpg");
+}
+.subwayBG{
+background-image: url("../img(subway_background.jpg)");
+} */
+
+#game-overlay h2{
+  margin-top: 20%;
+  color: white;
+  text-shadow: 2px 2px black;
+
+}
+#first{
+  position: fixed;
+  z-index: 5;
+}
+
+#loading-overlay h2 {
+  align-self: flex-end;
+  position: absolute;
+  bottom: 125px;
+  right: 41%;
+  font-weight: bold;
+  font-size: 40px;
+  color: black;
+}
+
+@media screen and (max-width: 700px) and (orientation: portrait) {
+  #loading-overlay h2 {
+    right: 20%;
+    bottom: 12%
+  }
+}
+@media screen and (max-width: 700px) and (orientation: landscape) {
+  #loading-overlay h2 {
+    display: none;
+  }
+}
+@media screen and (min-width: 700px) and (orientation: portrait) {
+  #loading-overlay h2 {
+    display: none;
+  }
+}
+
+#counter{
+  color: white;
+  font-weight: bold;
+  font-size: 37px;
+  text-shadow: 2px 2px black;
+  margin-top: 40%;
+}
+
+
+.overlay-logo {
+
+  background-repeat:no-repeat;
+
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+#taplistener{
+  top: 65%;
+  height: 171px;
+  width: 171px;
+
+}
+.redNestImage{
+  background-image: url("../img/bird_nest_red_new.png");
+}
+.blueNestImage{
+  background-image: url("../img/bird_nest_blue_new.png");
+}
+
+/*  Ripple */
+
+.ripple {
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  position: absolute;
+  opacity: 1;
+}
+.rippleEffect {
+  animation: rippleDrop .6s linear;
+}
+
+@keyframes rippleDrop {
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.spin {
+  border: 10px solid black;
+  border-radius: 50%;
+  border-top: 10px solid #4297e4;
+  width: 250px;
+  height: 250px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+  /* 50% { transform: scale(1);} */
+}
+
+.overlay-logo img{
+  width: 175px;
+  height: auto;
+}

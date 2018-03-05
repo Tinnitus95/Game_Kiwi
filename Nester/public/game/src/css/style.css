@@ -1,0 +1,120 @@
+#map {
+  height: 100vh;
+}
+
+body {
+  background-color: #fff;
+}
+
+.gmnoprint a, .gmnoprint span {
+  display:none;
+}
+.gmnoprint div {
+  background:none !important;
+}
+
+img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png"], a[href^="http://maps.google.com/maps"], img[src="https://maps.gstatic.com/mapfiles/api-3/images/google4_hdpi.png"]{
+  display:none !important;
+}
+
+#main_button{
+  background-image: url("../img/snatchbutton_trans.png");
+  height: 80px;
+  width: 80px;
+  position: fixed;
+  top: 83%;
+  left: auto;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#main_button:focus {
+  outline: 0;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+nav {
+  overflow: hidden;
+  position: fixed;
+  z-index: 0;
+  padding-top: 90px;
+}
+
+
+.menu {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  transform: translateX(100%);
+  transition: all 0.2s ease;
+  min-width: 200px;
+}
+
+.menu-open {
+  transform: translateX(0);
+}
+
+
+.menu li {
+  list-style: none;
+  padding: 14px 15px 20px 0px;
+  display: block;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  transition: all 0.2s ease-in;
+  background: #2A2B2A;
+  margin-bottom: 1px;
+  text-align: center;
+}
+
+.menu a:hover {
+  text-decoration: none;
+  background: white;
+  color: black;
+}
+
+
+.toggle-menu {
+  box-shadow: none;
+  margin: 20px auto;
+  display: block;
+  position: fixed;
+  z-index: 2;
+  font-size: 3em;
+  cursor: pointer;
+  right: 10px;
+}
+
+.gm-style-iw {
+  display: flex;
+  text-align: center;
+  /* justify-content: center; */
+}
+
+.gm-style-iw button {
+  background-color: transparent;
+  color: green;
+  border: 2px solid green;
+  text-transform: uppercase;
+  left: auto;
+}
+
+.gm-style-iw p {
+  padding-bottom: 0px;
+}
+
+.gm-style-iw #nest-lock-message {
+  color: red;
+  font-weight: bold;
+}
