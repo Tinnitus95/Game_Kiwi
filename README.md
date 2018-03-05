@@ -4,11 +4,13 @@ Geolocation group project
 
 ## Link to Game_Kiwi_Backend repository
 https://github.com/kyhrikard/game_kiwi_backend
+## Link to game_kiwi_leaderboard repository
+https://github.com/kyhrikard/game_kiwi_leaderboard
 
 
-## Getting Started 
+## Getting Started
 
-### Prerequisites 
+### Prerequisites
 * Node
 
 ### Installing
@@ -52,7 +54,3 @@ Feel free to contact us here on github if you would like to get involved
 
 
 See also the list of [contributors](https://github.com/Tinnitus95/Game_Kiwi/graphs/contributors) who participated in this project.
-
-
-
-
