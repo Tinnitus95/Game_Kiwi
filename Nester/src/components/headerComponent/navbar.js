@@ -25,7 +25,7 @@ class Navbar extends Component {
                 <Link className="nav-link js-scroll-trigger" to='/about'>About</Link>
               </li>
               <li className="nav-item">
-                <a target="_blank" className="nav-link js-scroll-trigger" href="http://projectsbyoskar.com/nestr/">Leaderboard</a>
+                <a target="_blank" className="nav-link js-scroll-trigger" href="https://nestr-dev-leaderboard.herokuapp.com/">Leaderboard</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link js-scroll-trigger" href="/game/index.html">Game</a>
