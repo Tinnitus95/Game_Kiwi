@@ -316,14 +316,16 @@ function snatchNest(id) {
           if (nestMarkers[i].inhabitedby === "Blue") {
             //console.log("blue")
             nestColor.classList.add("blueNestImage");
+            toggleoverlay(id);
           }
           else if (nestMarkers[i].inhabitedby === "Red") {
             //console.log("red")
             nestColor.classList.add("redNestImage");
+            toggleoverlay(id);
           }
 
 
-          toggleoverlay(id);
+
         } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
           console.log("Your team already owns this nest!")
         } else {
