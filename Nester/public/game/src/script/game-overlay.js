@@ -7,7 +7,7 @@ function toggleoverlay(id) {
   BGrandomiser();
   let counter = 20;
   x.style.display = "block";
-  taplisten.addEventListener("click", function(){
+  taplisten.addEventListener("click", function clicked(){
     counter--;
     document.getElementById('counter').innerHTML = counter;
     if(counter === 0){
@@ -15,7 +15,11 @@ function toggleoverlay(id) {
       counter = 20;
       document.getElementById('counter').innerHTML = counter;
       postNest(id);
+      console.log("I Did IT!")
+      taplisten.removeEventListener("click", clicked, false);
+
     }
-  })
+
+},false)
 
 }
