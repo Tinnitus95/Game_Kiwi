@@ -466,7 +466,7 @@ function isNestLocked(timestamp) {
   if (moment(now).isAfter(lockedUntil)) {
     return false;
   } else {
-    return false;
+    return true;
   }
 }
 
