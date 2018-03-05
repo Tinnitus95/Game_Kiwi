@@ -15,7 +15,6 @@ function toggleoverlay(id) {
       counter = 20;
       document.getElementById('counter').innerHTML = counter;
       postNest(id);
-      console.log("I Did IT!")
       taplisten.removeEventListener("click", clicked, false);
 
     }
