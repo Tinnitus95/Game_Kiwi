@@ -6,9 +6,7 @@ import {
 
 //components
 import Navbar from './components/headerComponent/navbar';
-import Footer from './components/footerComponent/footer';
 import Homepage from './components/pages/homePage';
-import Login from './components/pages/login.js';
 import About from './components/pages/about';
 
 import './Assets/include/bootstrap';

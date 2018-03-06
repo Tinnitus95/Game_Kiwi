@@ -1,3 +1,4 @@
+// Style for google maps
 let mapOptions = {
   zoom: 5,
   disableDefaultUI: true,
