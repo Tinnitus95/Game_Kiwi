@@ -209,6 +209,9 @@ footer a {
 }
 footer a:hover, footer a:focus { color: #fff; border-bottom: 1px dotted #fff; }
 
+.about-text-main {
+    display: inline;
+}
 
 /***** Media queries *****/
 
