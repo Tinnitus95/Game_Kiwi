@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import screen from '../../Assets/img/screen.png'
+
 
 class About extends Component {
     render() {
@@ -9,7 +11,7 @@ class About extends Component {
                         <div className="col-lg-8 mx-auto">
                             <h2 className="white_me">About NEST:R</h2>
                             <p>NEST:R is a geolocation game where you compete over the control of Points of Interest on the map.</p>
-                            <p>The game idea simple, all you have to do is to capture as many nests as possible.<br />
+                            <p>The game idea is simple, all you have to do is to capture as many nests as possible.<br />
                             Are you ready to claim what's yours and expand your territory?<br />
                             Sign up now and play for FREE!</p>
                         </div>
@@ -17,9 +19,7 @@ class About extends Component {
                 </div>
             </section>
         )
-
     }
-
 }
 
 export default About;
