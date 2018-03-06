@@ -9,6 +9,8 @@ import Navbar from './components/headerComponent/navbar';
 import Homepage from './components/pages/homePage';
 import About from './components/pages/about';
 
+import "../node_modules/video-react/dist/video-react.css"; // import css
+
 import './Assets/include/bootstrap';
 import './Assets/css/grayscale.css';
 import './Assets/css/style.css';
