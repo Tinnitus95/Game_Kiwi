@@ -1,5 +1,5 @@
-function registerscript() {
   let message = document.getElementById("creation_message");
+function registerscript() {
   let username = document.getElementById("register-username").value;
   let password = document.getElementById("register-password").value;
   let email = document.getElementById("register-email").value;
@@ -28,7 +28,7 @@ function registerscript() {
     }
     else{
       message.innerHTML= `Sumting Wong`;
-      message.style.color = "ffe400";
+      message.style.color = "#ffe400";
       console.log(res.status);
     }
   }).catch(function(res) {
