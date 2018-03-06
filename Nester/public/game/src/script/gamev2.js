@@ -257,7 +257,7 @@ function playerInfo() {
   playerInfoMenu.appendChild(teamscorenode);
 
   let neutralnestsnode = document.createElement("LI");
-  let neutralnestsTextNode = document.createTextNode(`Neutral Nests: ${totalfreenests}`);
+  let neutralnestsTextNode = document.createTextNode(`Empty Nests: ${totalfreenests}`);
   neutralnestsnode.appendChild(neutralnestsTextNode);
   playerInfoMenu.appendChild(neutralnestsnode);
 
