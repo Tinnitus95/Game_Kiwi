@@ -10,8 +10,8 @@ let playerIcon,
   map,
   mapDiv,
   playerLatLng,
-  redteamscore,
-  blueteamscore,
+  redteamscore = 0,
+  blueteamscore = 0,
   currentteamscore,
   totalfreenests = 0,
   nestRedEggs,
@@ -30,7 +30,13 @@ function loadGame(myPos) {
   fetch(url + '/playertimestampnests/latest')
     .then((resp) => resp.json())
     .then(function (data) {
-      myLatestTimeStamp = formatTimeStampSubtractOne(data[0].timestamp);
+      // If the are no snatches in the DB set myLatestTimeStamp to now
+      if (data.length == 0) {
+        myLatestTimeStamp = moment().format();
+      }
+      else {
+        myLatestTimeStamp = formatTimeStampSubtractOne(data[0].timestamp);
+      }
       //console.log(myLatestTimeStamp);
       fetch(url + '/players/' + getCookie("nestrid"))
         .then((resp) => resp.json())
@@ -310,14 +316,16 @@ function snatchNest(id) {
           if (nestMarkers[i].inhabitedby === "Blue") {
             //console.log("blue")
             nestColor.classList.add("blueNestImage");
+            toggleoverlay(id);
           }
           else if (nestMarkers[i].inhabitedby === "Red") {
             //console.log("red")
             nestColor.classList.add("redNestImage");
+            toggleoverlay(id);
           }
 
 
-          toggleoverlay(id);
+
         } else if (nestMarkers[i].inhabitedby == playerMarker.team) {
           console.log("Your team already owns this nest!")
         } else {
@@ -396,7 +404,13 @@ function checklatestTimeStamp() {
   fetch(url + "/playertimestampnests/latest")
     .then((resp) => resp.json())
     .then(function (data) {
-      apiLatestTimeStamp = formatTimeStampSubtractOne(data[0].timestamp);
+      // If the are no snatches in the DB set apiLatestTimeStamp to myLatestTimeStamp
+      if (data.length == 0) {
+        apiLatestTimeStamp = myLatestTimeStamp;
+      }
+      else {
+        apiLatestTimeStamp = formatTimeStampSubtractOne(data[0].timestamp);
+      }
       //console.log(`My timestamp: ${myLatestTimeStamp} Database timestamp: ${apiLatestTimeStamp}`);
       if (apiLatestTimeStamp !== myLatestTimeStamp) {
         console.log("Updates availiable in DB");
